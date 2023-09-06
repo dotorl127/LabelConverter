@@ -1,0 +1,23 @@
+ext: text
+column: True
+class: 0
+2Dbox:
+  center: False
+  coord: [1,
+          2,
+          3,
+          4]
+3Dbox:
+  loc:
+    x: 5
+    y: 6
+    z: 7
+  dim:
+    length: 8
+    width: 9
+    height: 10
+  rot:
+    roll: 11
+    pitch:
+    yaw:
+extra: [12, 13, 14]

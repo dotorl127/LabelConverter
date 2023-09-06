@@ -1,0 +1,24 @@
+ext: json
+column: False
+class: ['dataset', 'objs', 'class']
+2Dbox:
+  center: False
+  coord: [['dataset', 'objs', '2dbbox', 'x1']
+          ['dataset', 'objs', '2dbbox', 'y1'],
+          ['dataset', 'objs', '2dbbox', 'x2'],
+          ['dataset', 'objs', '2dbbox', 'y2']]
+3Dbox:
+  loc:
+    x: ['dataset', 'objs', '3dbbox', 'loc', 'x']
+    y: ['dataset', 'objs', '3dbbox', 'loc', 'y']
+    z: ['dataset', 'objs', '3dbbox', 'loc', 'z']
+  dim:
+    length: ['dataset', 'objs', '3dbbox', 'dim', 'l']
+    width: ['dataset', 'objs', '3dbbox', 'dim', 'l']
+    height: ['dataset', 'objs', '3dbbox', 'dim', 'l']
+  rot:
+    roll: ['dataset', 'objs', '3dbbox', 'rot', 'x']
+    pitch: ['dataset', 'objs', '3dbbox', 'rot', 'y']
+    yaw: ['dataset', 'objs', '3dbbox', 'rot', 'z']
+extra: [['dataset', 'objs', 'occluded'],
+        ['dataset', 'objs', 'synced']]
