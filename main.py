@@ -6,9 +6,7 @@ import waymo_open_dataset as waymo
 import nuscenes as nusc
 
 from parser import txt_parser, json_parsor
-from format_convert import kitti_converter as kic
-from format_convert import nusc_converter as nuc
-from format_convert import waymo_converter as wac
+from format_convert import kitti_converter, nusc_converter, waymo_converter
 
 
 def args_parser():
@@ -29,15 +27,19 @@ def parse_config(yaml_path):
 
 def convert(args):
     config = parse_config('config/config.yaml')
-
-    # TODO: load function via args.tgt_label_type
+    parser = getattr(f'{config["ext"]}_parser', 'parser')(config)
+    converter = getattr(f'{args.tgt_label_type}_converter', 'convert')
+    saver = getattr(f'{args.tgt_label_type}_converter', 'save')
 
     src_labels = os.listdir(args.input_label_dir)
     for src_label in tqdm(src_labels):
+        user_label = parser.parse(f'{args.input_label_dir}/{src_label}')
+
         # TODO: convert to each dataset type
-        converted_label = kic.converet(src_label)
+        converted_label = converter(user_label)
 
         # TODO: save correctly each dataset type
+        saver(args.output_label_dir, converted_label)
 
 
 if __name__ == '__main__':
