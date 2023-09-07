@@ -3,7 +3,7 @@ import argparse
 import yaml
 from tqdm import tqdm
 
-import label_parser
+from label_parser import text_parser, json_parser
 import format_converter
 
 
@@ -12,7 +12,8 @@ def args_parser():
     parser.add_argument('--input_label_dir', type=str, help='Directory to load user defined label')
     parser.add_argument('--config_path', type=str, help='Location parse configuration file')
     parser.add_argument('--output_label_dir', type=str, help='Directory to save converted label')
-    parser.add_argument('--tgt_label_type', type=str, default='', help='Dataset name to convert (kitti, nuscenes, waymo)')
+    parser.add_argument('--tgt_label_type', type=str, default='',
+                        help='Dataset name to convert (kitti, nuscenes, waymo)')
     return parser.parse_args()
 
 
@@ -39,12 +40,19 @@ def convert(args):
     config = parse_config(args.config_path)
     assert config is not None, 'Invalid configuration file'
 
-    parser = getattr(__import__(f'label_parser.{config["ext"]}_parser'), 'Parser')(config)
-    converter = getattr(__import__(f'format_converter.{args.tgt_label_type}_converter'), 'Converter')
+    parser = getattr(
+        __import__(f'label_parser.{config["ext"]}_parser', fromlist=["label_parser"]), 'Parser')(config)
+    assert parser is not None, "Not found parser"
+
+    converter = getattr(
+        __import__(f'format_converter.{args.tgt_label_type}_converter', fromlist=["format_converter"]), 'Converter')
+    assert converter is not None, "Not found converter"
 
     src_labels = os.listdir(args.input_label_dir)
     for src_label in tqdm(src_labels):
         parsed_label = parser.parse(f'{args.input_label_dir}/{src_label}')
+        import json
+        print(json.dumps(parsed_label, indent=4))
 
         # # TODO: convert to each dataset type
         # converted_label = converter(parsed_label)
