@@ -12,9 +12,9 @@ class Parser(base_Parser):
 
         with open(user_label_path, 'r') as f:
             labels = json.load(f)
-        labels = labels['data']
 
-        for label in labels:
+        for label in labels[self.config["split"]]:
+            print('----------------------------------')
             label_parsed = deepcopy(self.label_dict)
 
             class_label = label
@@ -41,8 +41,6 @@ class Parser(base_Parser):
 
             for k_in_d in self.config["3Dbox"]["rot"]:
                 bbox3d_label = label
-                for d in k_in_d:
-                    bbox3d_label = bbox3d_label[d]
                 label_parsed["3dbbox"]["rot"].append(self.check_none_json(bbox3d_label, k_in_d))
 
             if self.config["extra"] is not None:

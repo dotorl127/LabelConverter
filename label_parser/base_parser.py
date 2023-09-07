@@ -21,7 +21,15 @@ class base_Parser(ABC):
             return None
         else:
             for value in key_in_dict:
-                key = key[value]
+                if type(key) is list:
+                    value = int(value)
+                    assert value < len(key), 'Invalid index list'
+                    key = key[value]
+                elif type(key) is dict:
+                    if value in key:
+                        key = key[value]
+                    else:
+                        return None
             return key
 
     @abstractmethod

@@ -1,6 +1,6 @@
 ext: json
-split:
-class: [ 'category', 'id' ]
+split: 'data'
+class: [ 'category', 0, 'id' ]
 2Dbox:
   center: False
   coord: [ [ 'bbox', 0 ],
@@ -20,6 +20,4 @@ class: [ 'category', 'id' ]
     roll:
     pitch:
     yaw:
-extra: { 'occluded': [ 'occluded' ],
-         'weather': [ 'weather' ],
-         'scene': [ 'scene' ] }
+extra: { 'occluded': [ 'occluded' ] }
