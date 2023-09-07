@@ -17,46 +17,36 @@ class Parser(base_Parser):
             label_parsed = self.label_dict.copy()
 
             class_label = label
-            for d in self.config["class"]:
-                class_label = class_label[d]
-            label_parsed["class"] = class_label
+            label_parsed["class"] = self.check_none_json(class_label, self.config["class"])
 
-            for dd in self.config["2Dbox"]["coord"]:
+            for k_in_d in self.config["2Dbox"]["coord"]:
                 bbox2d_label = label
-                for d in dd:
-                    bbox2d_label = bbox2d_label[d]
-                label_parsed["2dbbox"].append(bbox2d_label)
+                label_parsed["2dbbox"].append(self.check_none_json(bbox2d_label, k_in_d))
 
             if self.config["2Dbox"]["center"]:
-                cx, cy, w, d = label_parsed["2dbbox"]
+                cx, cy, w, h = list(map(float, label_parsed["2dbbox"]))
                 label_parsed["2dbbox"] = [cx - w / 2,
-                                    cy - h / 2,
-                                    cx + w / 2,
-                                    cy + h / 2]
+                                          cy - h / 2,
+                                          cx + w / 2,
+                                          cy + h / 2]
 
-            for dd in self.config["3Dbox"]["loc"]:
+            for k_in_d in self.config["3Dbox"]["loc"]:
                 bbox3d_label = label
-                for d in dd:
-                    bbox3d_label = bbox3d_label[d]
-                label_parsed["3dbbox"]["loc"].append(bbox3d_label)
+                label_parsed["3dbbox"]["loc"].append(self.check_none_json(bbox3d_label, k_in_d))
 
-            for dd in self.config["3Dbox"]["dim"]:
+            for k_in_d in self.config["3Dbox"]["dim"]:
                 bbox3d_label = label
-                for d in dd:
-                    bbox3d_label = bbox3d_label[d]
-                label_parsed["3dbbox"]["dim"].append(bbox3d_label)
+                label_parsed["3dbbox"]["dim"].append(self.check_none_json(bbox3d_label, k_in_d))
 
-            for dd in self.config["3Dbox"]["rot"]:
+            for k_in_d in self.config["3Dbox"]["rot"]:
                 bbox3d_label = label
-                for d in dd:
+                for d in k_in_d:
                     bbox3d_label = bbox3d_label[d]
-                label_parsed["3dbbox"]["rot"].append(bbox3d_label)
+                label_parsed["3dbbox"]["rot"].append(self.check_none_json(bbox3d_label, k_in_d))
 
-            for dd in self.config["extra"]:
+            for k_in_d in self.config["extra"]:
                 extra_label = label
-                for d in dd:
-                    extra_label = extra_label[d]
-                label_parsed["extra"].append(extra_label)
+                label_parsed["extra"].append(self.check_none_json(extra_label, k_in_d))
 
             label_list.append(label_parsed)
 

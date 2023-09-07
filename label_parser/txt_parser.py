@@ -15,34 +15,31 @@ class Parser(base_Parser):
             label_parsed = self.label_dict.copy()
 
             split_label = label.split(self.config["split"])
-            label_parsed["class"] = split_label[self.config["class"]]
 
-            if not self.config["2Dbox"]["center"]:
-                label_parsed["2dbbox"] = [float(split_label[self.config["2Dbox"]["coord"][0]]),
-                                          float(split_label[self.config["2Dbox"]["coord"][1]]),
-                                          float(split_label[self.config["2Dbox"]["coord"][2]]),
-                                          float(split_label[self.config["2Dbox"]["coord"][3]])]
-            else:
-                cx = float(split_label[self.config["2Dbox"]["coord"][0]])
-                cy = float(split_label[self.config["2Dbox"]["coord"][1]])
-                w = float(split_label[self.config["2Dbox"]["coord"][2]])
-                h = float(split_label[self.config["2Dbox"]["coord"][3]])
+            label_parsed["class"] = self.check_none_txt(split_label, self.config["class"])
+
+            label_parsed["2dbbox"] = [self.check_none_txt(split_label, self.config["2Dbox"]["coord"][0]),
+                                      self.check_none_txt(split_label, self.config["2Dbox"]["coord"][1]),
+                                      self.check_none_txt(split_label, self.config["2Dbox"]["coord"][2]),
+                                      self.check_none_txt(split_label, self.config["2Dbox"]["coord"][3])]
+            if self.config["2Dbox"]["center"] and None not in label_parsed["2dbbox"]:
+                cx, cy, w, h = list(map(float, label_parsed["2dbbox"]))
                 label_parsed["2dbbox"] = [cx - w / 2,
                                           cy - h / 2,
                                           cx + w / 2,
                                           cy + h / 2]
 
-            label_parsed["3dbbox"]["loc"] = [float(split_label[self.config["3Dbox"]["loc"]["x"]]),
-                                             float(split_label[self.config["3Dbox"]["loc"]["y"]]),
-                                             float(split_label[self.config["3Dbox"]["loc"]["z"]])]
-            label_parsed["3dbbox"]["dim"] = [float(split_label[self.config["3Dbox"]["dim"]["length"]]),
-                                             float(split_label[self.config["3Dbox"]["dim"]["width"]]),
-                                             float(split_label[self.config["3Dbox"]["dim"]["height"]])]
-            label_parsed["3dbbox"]["rot"] = [float(split_label[self.config["3Dbox"]["dim"]["roll"]]),
-                                             float(split_label[self.config["3Dbox"]["dim"]["pitch"]]),
-                                             float(split_label[self.config["3Dbox"]["dim"]["yaw"]])]
+            label_parsed["3dbbox"]["loc"] = [self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["x"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["y"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["z"])]
+            label_parsed["3dbbox"]["dim"] = [self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["length"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["width"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["height"])]
+            label_parsed["3dbbox"]["rot"] = [self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["roll"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["pitch"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["yaw"])]
 
-            label_parsed["extra"] += [split_label[self.config["extra"][i]] for i in self.config["extra"]]
+            label_parsed["extra"] += [self.check_none_txt(split_label, i) for i in self.config["extra"]]
 
             label_list.append(label_parsed)
 

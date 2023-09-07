@@ -1,24 +1,25 @@
 ext: json
 split: False
-class: ['dataset', 'objs', 'class']
+class: [ 'data', 'category', 'id' ]
 2Dbox:
   center: False
-  coord: [['dataset', 'objs', '2dbbox', 'x1']
-          ['dataset', 'objs', '2dbbox', 'y1'],
-          ['dataset', 'objs', '2dbbox', 'x2'],
-          ['dataset', 'objs', '2dbbox', 'y2']]
+  coord: [ [ 'data', 'bbox', 0 ]
+           [ 'data', 'bbox', 1 ],
+           [ 'data', 'bbox', 2 ],
+           [ 'data', 'bbox', 3 ] ]
 3Dbox:
   loc:
-    x: ['dataset', 'objs', '3dbbox', 'loc', 'x']
-    y: ['dataset', 'objs', '3dbbox', 'loc', 'y']
-    z: ['dataset', 'objs', '3dbbox', 'loc', 'z']
+    x:
+    y:
+    z:
   dim:
-    length: ['dataset', 'objs', '3dbbox', 'dim', 'l']
-    width: ['dataset', 'objs', '3dbbox', 'dim', 'l']
-    height: ['dataset', 'objs', '3dbbox', 'dim', 'l']
+    length:
+    width:
+    height:
   rot:
-    roll: ['dataset', 'objs', '3dbbox', 'rot', 'x']
-    pitch: ['dataset', 'objs', '3dbbox', 'rot', 'y']
-    yaw: ['dataset', 'objs', '3dbbox', 'rot', 'z']
-extra: [['dataset', 'objs', 'occluded'],
-        ['dataset', 'objs', 'synced']]
+    roll:
+    pitch:
+    yaw:
+extra: [ [ 'data', 'occluded' ],
+         [ 'data', 'weather' ],
+         [ 'data', 'scene' ] ]

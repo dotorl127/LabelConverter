@@ -3,21 +3,21 @@ split: ' '
 class: 0
 2Dbox:
   center: False
-  coord: [1,
-          2,
-          3,
-          4]
+  coord: [4,
+          5,
+          6,
+          7]
 3Dbox:
   loc:
-    x: 5
-    y: 6
-    z: 7
+    x: 8
+    y: 9
+    z: 10
   dim:
-    length: 8
-    width: 9
-    height: 10
+    length: 11
+    width: 12
+    height: 13
   rot:
-    roll: 11
+    roll:
     pitch:
-    yaw:
-extra: [12, 13, 14]
+    yaw: 14
+extra:
