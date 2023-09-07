@@ -12,6 +12,7 @@ class Parser(base_Parser):
 
         with open(user_label_path, 'r') as f:
             labels = json.load(f)
+        labels = labels['data']
 
         for label in labels:
             label_parsed = deepcopy(self.label_dict)
@@ -44,9 +45,10 @@ class Parser(base_Parser):
                     bbox3d_label = bbox3d_label[d]
                 label_parsed["3dbbox"]["rot"].append(self.check_none_json(bbox3d_label, k_in_d))
 
-            for k_in_d in self.config["extra"]:
-                extra_label = label
-                label_parsed["extra"].append(self.check_none_json(extra_label, k_in_d))
+            if self.config["extra"] is not None:
+                for key, value in self.config["extra"].items():
+                    extra_label = label
+                    label_parsed["extra"][key] = self.check_none_json(extra_label, value)
 
             label_list.append(label_parsed)
 

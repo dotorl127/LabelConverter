@@ -21,3 +21,6 @@ class: 0
     pitch:
     yaw: 14
 extra:
+  truncated: 1
+  occluded: 2
+  alpha: 3

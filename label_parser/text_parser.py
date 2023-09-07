@@ -41,7 +41,8 @@ class Parser(base_Parser):
                                              self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["yaw"])]
 
             if self.config["extra"] is not None:
-                label_parsed["extra"] += [self.check_none_txt(split_label, i) for i in self.config["extra"]]
+                for key, value in self.config["extra"].items():
+                    label_parsed["extra"][key] = self.check_none_txt(split_label, value)
 
             label_list.append(label_parsed)
 

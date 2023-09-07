@@ -1,12 +1,12 @@
 ext: json
-split: False
-class: [ 'data', 'category', 'id' ]
+split:
+class: [ 'category', 'id' ]
 2Dbox:
   center: False
-  coord: [ [ 'data', 'bbox', 0 ]
-           [ 'data', 'bbox', 1 ],
-           [ 'data', 'bbox', 2 ],
-           [ 'data', 'bbox', 3 ] ]
+  coord: [ [ 'bbox', 0 ],
+           [ 'bbox', 1 ],
+           [ 'bbox', 2 ],
+           [ 'bbox', 3 ] ]
 3Dbox:
   loc:
     x:
@@ -20,6 +20,6 @@ class: [ 'data', 'category', 'id' ]
     roll:
     pitch:
     yaw:
-extra: [ [ 'data', 'occluded' ],
-         [ 'data', 'weather' ],
-         [ 'data', 'scene' ] ]
+extra: { 'occluded': [ 'occluded' ],
+         'weather': [ 'weather' ],
+         'scene': [ 'scene' ] }

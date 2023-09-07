@@ -6,5 +6,5 @@ label_ = {
         'dim': [],
         'rot': [],
     },
-    'extra': [],
+    'extra': {},
 }
