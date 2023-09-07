@@ -19,7 +19,6 @@ def args_parser():
 
 def parse_config(yaml_path):
     assert os.path.exists(yaml_path), 'Not found configuration YAML file'
-
     with open(yaml_path, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     return config

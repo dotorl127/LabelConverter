@@ -1,9 +1,10 @@
+from base_parser import base_Parser
 from label_dict import label_
 
 
-class Parser:
+class Parser(base_Parser):
     def __init__(self, config):
-        self.config = config
+        super().__init__(config)
 
     def parse(self, user_label_path):
         label_list = []
