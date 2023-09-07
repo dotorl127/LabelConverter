@@ -38,7 +38,7 @@ def convert(args):
     assert config is not None, 'Invalid configuration file'
 
     parser = getattr(
-        __import__(f'label_parser.{config["ext"]}_parser', fromlist=["label_parser"]), 'Parser')(config)
+        __import__(f'label_parser.{config["ext"]}_parser', fromlist=["label_parser"]), 'parser')(config)
     assert parser is not None, "Not found parser"
 
     converter = getattr(
