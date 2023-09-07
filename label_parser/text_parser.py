@@ -23,22 +23,18 @@ class parser(base_parser):
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][1]),
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][2]),
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][3])]
-            if self.config["2Dbox"]["center"] and None not in label_parsed["2dbbox"]:
-                cx, cy, w, h = list(map(float, label_parsed["2dbbox"]))
-                label_parsed["2dbbox"] = [cx - w / 2,
-                                          cy - h / 2,
-                                          cx + w / 2,
-                                          cy + h / 2]
+            if self.config["2Dbox"]["is_center"] and None not in label_parsed["2dbbox"]:
+                label_parsed["2dbbox"] = self.ccwh2xyxy(label_parsed["2dbbox"])
 
-            label_parsed["3dbbox"]["loc"] = [self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["x"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["y"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["z"])]
-            label_parsed["3dbbox"]["dim"] = [self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["length"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["width"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["height"])]
-            label_parsed["3dbbox"]["rot"] = [self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["roll"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["pitch"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["yaw"])]
+            label_parsed["3dbbox"]["loc"]["x"] = self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["x"])
+            label_parsed["3dbbox"]["loc"]["y"] = self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["y"])
+            label_parsed["3dbbox"]["loc"]["z"] = self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["z"])
+            label_parsed["3dbbox"]["dim"]["width"] = self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["width"])
+            label_parsed["3dbbox"]["dim"]["length"] = self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["length"])
+            label_parsed["3dbbox"]["dim"]["height"] = self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["height"])
+            label_parsed["3dbbox"]["rot"]["roll"] = self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["roll"])
+            label_parsed["3dbbox"]["rot"]["pitch"] = self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["pitch"])
+            label_parsed["3dbbox"]["rot"]["yaw"] = self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["yaw"])
 
             if self.config["extra"] is not None:
                 for key, value in self.config["extra"].items():

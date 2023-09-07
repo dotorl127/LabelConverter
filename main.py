@@ -47,15 +47,8 @@ def convert(args):
 
     src_labels = os.listdir(args.input_label_dir)
     for src_label in tqdm(src_labels):
-        parsed_label = parser.parse(f'{args.input_label_dir}/{src_label}')
-        import json
-        print(json.dumps(parsed_label, indent=4))
-
-        # # TODO: convert to each dataset type
-        # converted_label = converter(parsed_label)
-        #
-        # # TODO: save correctly each dataset type
-        # saver(f'{args.output_label_dir.rstrip("/")}/{src_label}', converted_label)
+        parsed_user_label = parser.parse(f'{args.input_label_dir}/{src_label}')
+        converter.run(parsed_user_label, f'{args.output_label_dir.rstrip("/")}/{src_label}')
 
 
 if __name__ == '__main__':

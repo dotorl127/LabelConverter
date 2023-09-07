@@ -32,6 +32,14 @@ class base_parser(ABC):
                         return None
             return key
 
+    @staticmethod
+    def ccwh2xyxy(coord):
+        cx, cy, w, h = float(coord)
+        return [cx - w / 2,
+                cy - h / 2,
+                cx + w / 2,
+                cy + h / 2]
+
     @abstractmethod
     def parse(self, user_label_path):
         pass

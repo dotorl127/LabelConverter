@@ -1,14 +1,40 @@
 from .base_converter import base_converter
+from copy import deepcopy
 
 
 class Converter(base_converter):
-    def __init__(self):
-        super().__init__([-1] * 14)
+    def __init__(self, add_extra=False):
+        super().__init__([-99] * 13)
+        self.converted_label = None
+        self.converted_label_str = None
+        self.add_extra = add_extra
 
-    def convert(self, user_label):
-        # TODO: convert kitti format one line each object
-        kitti_label_dict = user_label
-        return kitti_label_dict
+    def convert(self, parsed_user_label):
+        """
+        original kitti label format :
+        type truncated occluded alpha bbox(x1, y1, x2, y2) dimensions(height, width, length) location(x, y, z) rotation_y socre
+        """
+        for label in parsed_user_label:
+            self.converted_label = deepcopy(self.default_dict)
+            self.converted_label[0] = label["class"]
+            self.converted_label[4:8] = label["2dbbox"]
+            self.converted_label[8] = label["3dbbox"]["dim"]["height"]
+            self.converted_label[9] = label["3dbbox"]["dim"]["width"]
+            self.converted_label[10] = label["3dbbox"]["dim"]["length"]
+            self.converted_label[11] = label["3dbbox"]["rot"]["yaw"]
 
-    def save(self, tgt_path, converted_label):
-        pass
+            if self.add_extra:
+                for _, value in label["extra"].items():
+                    self.converted_label += value
+
+            self.converted_label_str = ' '.join(list(map(str, self.converted_label)))
+
+    def save(self, tgt_path):
+        if self.converted_label_str is not None:
+            with open(tgt_path, 'w') as f:
+                f.write(self.converted_label)
+            self.converted_label_str = None
+
+    def run(self, parsed_user_label, tgt_path):
+        self.convert(parsed_user_label)
+        self.save(tgt_path)

@@ -2,9 +2,21 @@ label_ = {
     'class': '',
     '2dbbox': [],
     '3dbbox': {
-        'loc': [],
-        'dim': [],
-        'rot': [],
+        'loc': {
+            'x': '',
+            'y': '',
+            'z': '',
+        },
+        'dim': {
+            'width': '',
+            'height': '',
+            'length': '',
+        },
+        'rot': {
+            'roll': '',
+            'pitch': '',
+            'yaw': '',
+        },
     },
     'extra': {},
 }

@@ -23,24 +23,20 @@ class parser(base_parser):
                 bbox2d_label = label
                 label_parsed["2dbbox"].append(self.check_none_json(bbox2d_label, k_in_d))
 
-            if self.config["2Dbox"]["center"]:
-                cx, cy, w, h = list(map(float, label_parsed["2dbbox"]))
-                label_parsed["2dbbox"] = [cx - w / 2,
-                                          cy - h / 2,
-                                          cx + w / 2,
-                                          cy + h / 2]
+                if self.config["2Dbox"]["is_center"] and None not in label_parsed["2dbbox"]:
+                    label_parsed["2dbbox"] = self.ccwh2xyxy(label_parsed["2dbbox"])
 
             for k_in_d in self.config["3Dbox"]["loc"]:
                 bbox3d_label = label
-                label_parsed["3dbbox"]["loc"].append(self.check_none_json(bbox3d_label, k_in_d))
+                label_parsed["3dbbox"]["loc"][self.config["3Dbox"]["loc"]] = self.check_none_json(bbox3d_label, k_in_d)
 
             for k_in_d in self.config["3Dbox"]["dim"]:
                 bbox3d_label = label
-                label_parsed["3dbbox"]["dim"].append(self.check_none_json(bbox3d_label, k_in_d))
+                label_parsed["3dbbox"]["dim"][self.config["3Dbox"]["dim"]] = self.check_none_json(bbox3d_label, k_in_d)
 
             for k_in_d in self.config["3Dbox"]["rot"]:
                 bbox3d_label = label
-                label_parsed["3dbbox"]["rot"].append(self.check_none_json(bbox3d_label, k_in_d))
+                label_parsed["3dbbox"]["rot"][self.config["3Dbox"]["rot"]] = self.check_none_json(bbox3d_label, k_in_d)
 
             if self.config["extra"] is not None:
                 for key, value in self.config["extra"].items():
