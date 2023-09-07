@@ -1,5 +1,4 @@
-from base_parser import base_Parser
-from label_dict import label_
+from .base_parser import base_Parser
 
 
 class Parser(base_Parser):
@@ -13,9 +12,9 @@ class Parser(base_Parser):
             labels = f.readlines()
 
         for label in labels:
-            label_parsed = label_.copy()
+            label_parsed = self.label_dict.copy()
 
-            split_label = label.split(' ')
+            split_label = label.split(self.config["split"])
             label_parsed["class"] = split_label[self.config["class"]]
 
             if not self.config["2Dbox"]["center"]:

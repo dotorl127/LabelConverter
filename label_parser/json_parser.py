@@ -1,5 +1,5 @@
-from base_parser import base_Parser
-from label_dict import label_
+from .base_parser import base_Parser
+from utlis.label_dict import label_
 import json
 
 
@@ -14,7 +14,7 @@ class Parser(base_Parser):
             labels = json.load(f)
 
         for label in labels:
-            label_parsed = label_.copy()
+            label_parsed = self.label_dict.copy()
 
             class_label = label
             for d in self.config["class"]:

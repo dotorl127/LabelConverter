@@ -1,5 +1,5 @@
 ext: text
-column: True
+split: ' '
 class: 0
 2Dbox:
   center: False

@@ -1,5 +1,5 @@
 ext: json
-column: False
+split: False
 class: ['dataset', 'objs', 'class']
 2Dbox:
   center: False
