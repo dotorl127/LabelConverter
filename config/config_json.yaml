@@ -20,4 +20,5 @@ class: [ 'category', 0, 'id' ]
     roll:
     pitch:
     yaw:
-extra: { 'occluded': [ 'occluded' ] }
+extra: { 'bbox_id': [ 'bbox_id' ],
+         'occluded': [ 'occluded' ] }

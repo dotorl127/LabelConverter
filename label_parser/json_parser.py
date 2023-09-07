@@ -14,7 +14,6 @@ class Parser(base_Parser):
             labels = json.load(f)
 
         for label in labels[self.config["split"]]:
-            print('----------------------------------')
             label_parsed = deepcopy(self.label_dict)
 
             class_label = label
