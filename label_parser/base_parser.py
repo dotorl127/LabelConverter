@@ -9,11 +9,10 @@ class base_Parser(ABC):
 
     @staticmethod
     def check_none_txt(lst, idx):
-        assert idx < len(lst), 'Invalid index list'
-
-        if lst[idx] is None:
+        if idx is None:
             return None
         else:
+            assert idx < len(lst), 'Invalid index list'
             return lst[idx]
 
     @staticmethod

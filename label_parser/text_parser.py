@@ -1,4 +1,5 @@
 from .base_parser import base_Parser
+from copy import deepcopy
 
 
 class Parser(base_Parser):
@@ -12,9 +13,9 @@ class Parser(base_Parser):
             labels = f.readlines()
 
         for label in labels:
-            label_parsed = self.label_dict.copy()
+            label_parsed = deepcopy(self.label_dict)
 
-            split_label = label.split(self.config["split"])
+            split_label = label.strip().split(self.config["split"])
 
             label_parsed["class"] = self.check_none_txt(split_label, self.config["class"])
 
@@ -35,11 +36,12 @@ class Parser(base_Parser):
             label_parsed["3dbbox"]["dim"] = [self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["length"]),
                                              self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["width"]),
                                              self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["height"])]
-            label_parsed["3dbbox"]["rot"] = [self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["roll"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["pitch"]),
-                                             self.check_none_txt(split_label, self.config["3Dbox"]["dim"]["yaw"])]
+            label_parsed["3dbbox"]["rot"] = [self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["roll"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["pitch"]),
+                                             self.check_none_txt(split_label, self.config["3Dbox"]["rot"]["yaw"])]
 
-            label_parsed["extra"] += [self.check_none_txt(split_label, i) for i in self.config["extra"]]
+            if self.config["extra"] is not None:
+                label_parsed["extra"] += [self.check_none_txt(split_label, i) for i in self.config["extra"]]
 
             label_list.append(label_parsed)
 

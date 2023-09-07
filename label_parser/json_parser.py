@@ -1,6 +1,6 @@
 from .base_parser import base_Parser
-from utlis.label_dict import label_
 import json
+from copy import deepcopy
 
 
 class Parser(base_Parser):
@@ -14,7 +14,7 @@ class Parser(base_Parser):
             labels = json.load(f)
 
         for label in labels:
-            label_parsed = self.label_dict.copy()
+            label_parsed = deepcopy(self.label_dict)
 
             class_label = label
             label_parsed["class"] = self.check_none_json(class_label, self.config["class"])
