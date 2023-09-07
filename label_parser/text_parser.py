@@ -1,8 +1,8 @@
-from .base_parser import base_Parser
+from .base_parser import base_parser
 from copy import deepcopy
 
 
-class Parser(base_Parser):
+class parser(base_parser):
     def __init__(self, config):
         super().__init__(config)
 
