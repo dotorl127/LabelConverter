@@ -8,11 +8,13 @@ class base_Parser(ABC):
         self.label_dict = label_dict.label_
 
     @staticmethod
-    def check_none_txt(key, value):
-        if key[value] is None:
+    def check_none_txt(lst, idx):
+        assert idx < len(lst), 'Invalid index list'
+
+        if lst[idx] is None:
             return None
         else:
-            return key[value]
+            return lst[idx]
 
     @staticmethod
     def check_none_json(key, key_in_dict):
