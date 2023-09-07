@@ -6,7 +6,7 @@ class base_converter(ABC):
         self.default_label = default_label
 
     @abstractmethod
-    def converter(self, user_label):
+    def convert(self, user_label):
         pass
 
     @abstractmethod

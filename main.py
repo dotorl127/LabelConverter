@@ -3,8 +3,8 @@ import argparse
 import yaml
 from tqdm import tqdm
 
-from label_parser import text_parser, json_parser
-from format_converter import kitti_converter
+import label_parser
+import format_converter
 
 
 def args_parser():
@@ -35,29 +35,16 @@ def parse_config(yaml_path):
     return config
 
 
-def get_mod(ext):
-    if ext == 'text':
-        mod = text_parser
-    elif ext == 'json':
-        mod = json_parser
-    else:
-        return None
-
-    return mod
-
-
 def convert(args):
     config = parse_config(args.config_path)
     assert config is not None, 'Invalid configuration file'
 
-    parser = getattr(get_mod(config["ext"]), 'Parser')(config)
-    # converter = getattr(f'{args.tgt_label_type}_converter', 'convert')
-    # saver = getattr(f'{args.tgt_label_type}_converter', 'save')
+    parser = getattr(__import__(f'label_parser.{config["ext"]}_parser'), 'Parser')(config)
+    converter = getattr(__import__(f'format_converter.{args.tgt_label_type}_converter'), 'Converter')
 
     src_labels = os.listdir(args.input_label_dir)
     for src_label in tqdm(src_labels):
         parsed_label = parser.parse(f'{args.input_label_dir}/{src_label}')
-        print(parsed_label)
 
         # # TODO: convert to each dataset type
         # converted_label = converter(parsed_label)
