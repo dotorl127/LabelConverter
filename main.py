@@ -62,7 +62,8 @@ def main(args):
 
     for src_label in tqdm(src_labels):
         parsed_user_label = parser.parse(f'{args.input_label_path}/{src_label}')
-        converter.run(parsed_user_label, dir_path=args.output_label_dir, file_name=src_label)
+        print(parsed_user_label[0])
+        converter.run(parsed_user_label, args.output_label_dir, src_label)
 
 
 if __name__ == '__main__':

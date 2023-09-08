@@ -48,6 +48,4 @@ class parser(base_parser):
 
             label_list.append(label_parsed)
 
-            break
-
         return label_list
