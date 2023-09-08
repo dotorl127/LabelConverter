@@ -2,7 +2,7 @@ ext: text
 split: ' '
 class: 0
 2Dbox:
-  center: False
+  is_center: False
   coord: [4,
           5,
           6,

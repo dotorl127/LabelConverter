@@ -23,11 +23,11 @@ class base_parser(ABC):
             for value in key_in_dict:
                 if type(key) is list:
                     value = int(value)
-                    assert value < len(key), 'Invalid index list'
-                    key = key[value]
+                    if value < len(key):
+                        key = key[value]
                 elif type(key) is dict:
-                    assert value in key, 'Invalid key'
-                    key = key[value]
+                    if value in key:
+                        key = key[value]
             return key
 
     @staticmethod
