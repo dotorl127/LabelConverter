@@ -26,10 +26,8 @@ class base_parser(ABC):
                     assert value < len(key), 'Invalid index list'
                     key = key[value]
                 elif type(key) is dict:
-                    if value in key:
-                        key = key[value]
-                    else:
-                        return None
+                    assert value in key, 'Invalid key'
+                    key = key[value]
             return key
 
     @staticmethod

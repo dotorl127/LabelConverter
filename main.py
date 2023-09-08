@@ -1,5 +1,7 @@
 import os
 import argparse
+
+import cv2
 import yaml
 from tqdm import tqdm
 
@@ -15,10 +17,11 @@ def args_parser():
 
 
 def config_validation(config):
+    """
+    if need add configuration file validation code
+    """
     if config['ext'] == 'text' and not config['split']:
         return None
-
-    # TODO: if need add configuration file validation code
 
     return config
 
@@ -33,7 +36,7 @@ def parse_config(yaml_path):
     return config
 
 
-def convert(args):
+def main(args):
     config = parse_config(args.config_path)
     assert config is not None, 'Invalid configuration file'
 
@@ -53,5 +56,5 @@ def convert(args):
 
 if __name__ == '__main__':
     args = args_parser()
-    convert(args)
+    main(args)
     print('done.')

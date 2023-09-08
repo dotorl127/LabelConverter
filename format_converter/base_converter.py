@@ -2,8 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class base_converter(ABC):
-    def __init__(self, default_label):
-        self.default_dict = default_label
+    def __init__(self, default_label, add_extra=True):
+        self.default_label = default_label
+        self.add_extra = add_extra
 
     @abstractmethod
     def convert(self, parsed_user_label):
