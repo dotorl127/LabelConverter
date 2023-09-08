@@ -1,10 +1,11 @@
+import os
 from .base_converter import base_converter
 from copy import deepcopy
 
 
 class Converter(base_converter):
     def __init__(self, add_extra=True):
-        super().__init__(default_label=[-99] * 13, add_extra=add_extra)
+        super().__init__(default_label=[-99] * 13, add_extra=add_extra, extension='.txt')
         self.converted_label = None
 
     def convert(self, parsed_user_label):
@@ -27,12 +28,13 @@ class Converter(base_converter):
 
             self.converted_label = ' '.join(list(map(str, self.converted_label)))
 
-    def save(self, tgt_path):
+    def save(self, tgt_path, file_name):
+        file_name, _ = os.path.splitext(file_name)
         if self.converted_label is not None:
-            with open(tgt_path, 'w') as f:
+            with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
                 f.write(self.converted_label)
             self.converted_label = None
 
-    def run(self, parsed_user_label, tgt_path):
+    def run(self, parsed_user_label, tgt_path, file_name):
         self.convert(parsed_user_label)
-        self.save(tgt_path)
+        self.save(tgt_path, file_name)

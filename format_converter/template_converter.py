@@ -1,3 +1,4 @@
+import os
 from .base_converter import base_converter
 from copy import deepcopy
 
@@ -14,9 +15,9 @@ class Converter(base_converter):
         """
         self.converted_label = deepcopy(self.default_label)
 
-    def save(self, tgt_path):
+    def save(self, tgt_path, file_name):
         self.converted_label = None
 
-    def run(self, parsed_user_label, tgt_path):
+    def run(self, parsed_user_label, tgt_path, file_name):
         self.convert(parsed_user_label)
-        self.save(tgt_path)
+        self.save(tgt_path, file_name)

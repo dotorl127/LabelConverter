@@ -2,16 +2,17 @@ from abc import ABC, abstractmethod
 
 
 class base_converter(ABC):
-    def __init__(self, default_label, add_extra=True):
+    def __init__(self, default_label, add_extra=True, extension=None):
         self.default_label = default_label
         self.add_extra = add_extra
+        self.extension = extension
 
     @abstractmethod
     def convert(self, parsed_user_label):
         pass
 
     @abstractmethod
-    def save(self, tgt_path):
+    def save(self, tgt_path, file_name):
         pass
 
     @staticmethod
@@ -25,5 +26,5 @@ class base_converter(ABC):
                 h]
 
     @abstractmethod
-    def run(self, parsed_user_label, tgt_path):
+    def run(self, parsed_user_label, tgt_path, file_name):
         pass
