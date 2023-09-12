@@ -28,5 +28,8 @@ pip install pyquaternion pyyaml tqdm
 
 ### command line
 ```commandline
-python main.py --input_label_path {user defined label path} --config_path {configuration YAML file path} --output_label_dir {directory path output saved} --tgt_label_type {type for convert} 
+python main.py --input_label_path {user defined label path} 
+               --config_path {configuration YAML file path} 
+               --output_label_dir {directory path output saved} 
+               --tgt_label_type {type for convert} 
 ```
