@@ -12,7 +12,7 @@ def args_parser():
     parser.add_argument('--config_path', type=str, help='Location parse configuration file')
     parser.add_argument('--output_label_dir', type=str, help='Directory to save converted label')
     parser.add_argument('--tgt_label_type', type=str, default='',
-                        help='Dataset name to convert (kitti, nuscenes, waymo)')
+                        help='Dataset name to convert (kitti, coco, ...)')
     return parser.parse_args()
 
 
