@@ -3,7 +3,7 @@
 - read configuration YAML file and parse user defined label architecture
 ## updates
 ### September 2023
-- [x] add kitti converter
+- [x] add kitti, coco converter
 - [x] organize base, template data and code
 - [x] initialize repository
 ## requirements
