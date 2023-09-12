@@ -19,10 +19,12 @@ pip install pyquaternion pyyaml tqdm
 
 ## how to use
 ### arguments
-    --input_label_path : user defined label location
-    --config_path : user defined label's configuration YAML file for parse
-    --output_label_dir : output directory for save converted label
-    --tgt_label_type : dataset/label type for convert user defined label(current support [KITTI, COCO])
+```text
+--input_label_path : user defined label location
+--config_path : user defined label's configuration YAML file for parse
+--output_label_dir : output directory for save converted label
+--tgt_label_type : dataset/label type for convert user defined label(current support [KITTI, COCO])
+```
 
 ### command line
 ```commandline
