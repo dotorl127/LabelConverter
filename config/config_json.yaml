@@ -23,3 +23,4 @@ class: [ 'category', '0', 'id' ]
 extra:
   'bbox_id': [ 'bbox_id' ]
   'occluded': [ 'occluded' ]
+file_name:

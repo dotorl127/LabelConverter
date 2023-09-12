@@ -8,6 +8,7 @@ class converter(base_converter):
     def __init__(self, add_extra=True):
         super().__init__(default_label=[-99] * 13, add_extra=add_extra, extension='txt')
         self.converted_str = ''
+        self.converted_dict = {}
 
     def convert(self, parsed_user_label):
         """
@@ -32,15 +33,25 @@ class converter(base_converter):
 
             self.converted_str += ' '.join(list(map(str, converted_label))) + '\n'
 
+            if label["file_name"] is not None:
+                self.converted_dict[label["file_name"]] += self.converted_str
+                self.converted_str = ''
+
     def save(self, tgt_path, file_name):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
         file_name, _ = os.path.splitext(file_name)
-        if self.converted_str is not None:
+        if self.converted_str != '':
             with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
                 f.write(self.converted_str)
             self.converted_str = ''
+
+        if len(self.converted_dict) != 0:
+            for key, value in self.converted_dict.items():
+                file_name, _ = os.path.splitext(key)
+                with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
+                    f.write(value)
 
     def run(self, parsed_user_label, tgt_path, file_name):
         self.convert(parsed_user_label)

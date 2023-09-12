@@ -23,4 +23,4 @@ class: [ 'category_id' ]
 extra:
   'iscrowd': [ 'iscrowd' ]
   'image_id': [ 'image_id' ]
-  'id': [ 'id' ]
+file_name: [ 'id' ]

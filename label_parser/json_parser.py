@@ -46,6 +46,10 @@ class parser(base_parser):
                     extra_label = label
                     label_parsed["extra"][key] = self.check_none_json(extra_label, value)
 
+            if self.config["file_name"] is not None:
+                file_name_label = label
+                label_parsed["file_name"] = self.check_none_json(file_name_label, self.config["file_name"])
+
             label_list.append(label_parsed)
 
         return label_list

@@ -1,4 +1,5 @@
 from .base_parser import base_parser
+import os
 from copy import deepcopy
 
 
@@ -39,6 +40,9 @@ class parser(base_parser):
             if self.config["extra"] is not None:
                 for key, value in self.config["extra"].items():
                     label_parsed["extra"][key] = self.check_none_txt(split_label, value)
+
+            if self.config["file_name"] is not None:
+                label_parsed["file_name"] = self.check_none_txt(split_label, os.path.basename(user_label_path))
 
             label_list.append(label_parsed)
 
