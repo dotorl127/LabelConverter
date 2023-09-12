@@ -10,7 +10,7 @@
 - pyquaternion
 - pyyaml
 ## support dataset label
-- [KITTI](https://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=2d)
+- [KITTI](https://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d)
 - [COCO](https://cocodataset.org/#download)
 ## how to use
 
