@@ -15,7 +15,7 @@ class parser(base_parser):
         for label in labels:
             label_parsed = deepcopy(self.label_dict)
 
-            split_label = label.strip().split(self.config["split"])
+            split_label = label.strip().split(self.config["anno_key"])
 
             label_parsed["class"] = self.check_none_txt(split_label, self.config["class"])
 

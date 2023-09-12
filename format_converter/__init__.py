@@ -1,1 +1,1 @@
-from .kitti_converter import Converter
+from .kitti_converter import converter

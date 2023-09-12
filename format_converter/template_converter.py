@@ -3,7 +3,7 @@ from .base_converter import base_converter
 from copy import deepcopy
 
 
-class Converter(base_converter):
+class converter(base_converter):
     def __init__(self, add_extra=True):
         super().__init__(default_label=None, add_extra=add_extra)
         self.converted_label = None

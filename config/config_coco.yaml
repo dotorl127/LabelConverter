@@ -1,6 +1,6 @@
 ext: json
-split: [ 'annotations' ]
-class: [ 'category_id']
+anno_key: [ 'annotations' ]
+class: [ 'category_id' ]
 2Dbox:
   is_center: False
   coord: [ [ 'bbox', '0' ],

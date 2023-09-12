@@ -13,7 +13,7 @@ class parser(base_parser):
         with open(user_label_path, 'r') as f:
             labels = json.load(f)
 
-        for label in self.check_none_json(labels, self.config["split"]):
+        for label in self.check_none_json(labels, self.config["anno_key"]):
             label_parsed = deepcopy(self.label_dict)
 
             class_label = label

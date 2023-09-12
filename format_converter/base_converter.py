@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class base_converter(ABC):
-    def __init__(self, default_label, add_extra=True, extension=None):
+    def __init__(self, default_label=None, add_extra=True, extension=None):
         self.default_label = default_label
         self.add_extra = add_extra
         self.extension = extension
