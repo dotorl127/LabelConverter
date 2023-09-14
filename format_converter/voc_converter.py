@@ -5,6 +5,7 @@ from tqdm import tqdm
 import xmltodict
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import ElementTree as EET
+from collections import defaultdict
 
 default_label = {
     'name': '',
@@ -23,7 +24,7 @@ default_label = {
 class converter(base_converter):
     def __init__(self, add_extra=True):
         super().__init__(default_label=default_label, add_extra=add_extra, extension='txt')
-        self.converted_dict = {"annotation": []}
+        self.converted_dict = {}
 
     def convert(self, parsed_user_label):
         """
@@ -58,6 +59,8 @@ class converter(base_converter):
             converted_label = {"objects": converted_label}
 
             if label["file_name"] is not None:
+                if label["file_name"] not in self.converted_dict:
+                    self.converted_dict[label["file_name"]] = defaultdict(list)
                 self.converted_dict[label["file_name"]]["annotations"].append(converted_label)
 
     def save(self, tgt_path, file_name):
@@ -69,7 +72,6 @@ class converter(base_converter):
             xml = ET.fromstring(xmltodict.unparse(self.converted_dict, pretty=True))
             f = EET(xml)
             f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)
-
 
     def run(self, parsed_user_label, tgt_path, file_name):
         self.convert(parsed_user_label)
