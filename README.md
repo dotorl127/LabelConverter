@@ -3,6 +3,8 @@
 - read configuration YAML file and parse user defined label architecture
 
 ## updates
+### october 2023
+- [x] add voc, mot converter
 ### September 2023
 - [x] add kitti, coco converter
 - [x] organize base, template data and code
@@ -11,10 +13,12 @@
 ## support dataset label
 - [KITTI](https://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d)
 - [COCO](https://cocodataset.org/#download)
+- [VOC](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html)
+- [MOT](https://motchallenge.net/data/MOT17/)
 
 ## requirements
 ```commandline
-pip install pyquaternion pyyaml tqdm
+pip install pyyaml tqdm dicttoxml
 ```
 
 ## how to use

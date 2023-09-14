@@ -1,0 +1,27 @@
+ext: text
+anno_key: ', '
+class: 7
+2Dbox:
+  is_center: False
+  coord: [2,
+          3,
+          4,
+          5]
+3Dbox:
+  loc:
+    x:
+    y:
+    z:
+  dim:
+    length:
+    width:
+    height:
+  rot:
+    roll:
+    pitch:
+    yaw:
+extra:
+  identity_number: 1
+  confidence score: 6
+  visibility: 8
+file_name: 0

@@ -1,0 +1,27 @@
+ext: xml
+anno_key: [ 'object' ]
+class: [ 'name' ]
+2Dbox:
+  is_center: False
+  coord: [ [ 'nbdbox', 'xmin' ],
+           [ 'nbdbox', 'ymin' ],
+           [ 'nbdbox', 'xmax' ],
+           [ 'nbdbox', 'ymax' ] ]
+3Dbox:
+  loc:
+    x:
+    y:
+    z:
+  dim:
+    length:
+    width:
+    height:
+  rot:
+    roll:
+    pitch:
+    yaw:
+extra:
+  'pose': [ 'pose' ]
+  'truncated': [ 'truncated' ]
+  'difficult': [ 'difficult' ]
+file_name:
