@@ -18,7 +18,7 @@
 
 ## requirements
 ```commandline
-pip install pyyaml tqdm dicttoxml
+pip install pyyaml tqdm xmltodict
 ```
 
 ## how to use

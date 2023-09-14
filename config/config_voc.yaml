@@ -1,5 +1,5 @@
 ext: xml
-anno_key: [ 'object' ]
+anno_key: [ 'annotation', 'object' ]
 class: [ 'name' ]
 2Dbox:
   is_center: False
