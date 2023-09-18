@@ -50,12 +50,14 @@ class converter(base_converter):
                     converted_label[key] = value
 
             self.converted_dict["annotations"].append(converted_label)
-            p_bar.update(1)
-        self.save(tgt_path, 'annotations', None)
 
-    def save(self, tgt_path, suffix, converted_dict):
+            p_bar.update(1)
+
+        self.save(tgt_path)
+
+    def save(self, tgt_path):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path, exist_ok=True)
 
-        with open(f'{tgt_path}/{suffix}.{self.extension}', 'a') as f:
+        with open(f'{tgt_path}/annotations.{self.extension}', 'w') as f:
             json.dump(self.converted_dict, f, indent=4)

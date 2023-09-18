@@ -7,6 +7,7 @@ from tqdm import tqdm
 class converter(base_converter):
     def __init__(self, add_extra=True, split_file=True):
         super().__init__(default_label=[-99] * 13, add_extra=add_extra, split_file=split_file, extension='txt')
+        self.converted_dict = {}
 
     def convert(self, parsed_user_label, tgt_path):
         """
@@ -33,13 +34,18 @@ class converter(base_converter):
                     else:
                         converted_label += [value]
 
-            converted_str = ' '.join(list(map(str, converted_label))) + '\n'
-            self.save(tgt_path, label["file_name"], converted_str)
+            if label["file_name"] not in self.converted_dict:
+                self.converted_dict[label["file_name"]] = ''
+            self.converted_dict[label["file_name"]] += ' '.join(list(map(str, converted_label))) + '\n'
+
             p_bar.update(1)
 
-    def save(self, tgt_path, suffix, converted_str):
+        self.save(tgt_path)
+
+    def save(self, tgt_path):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path, exist_ok=True)
 
-        with open(f'{tgt_path}/{suffix}.{self.extension}', 'a') as f:
-            f.write(converted_str)
+        for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
+            with open(f'{tgt_path}/{key}.{self.extension}', 'w') as f:
+                f.write(value)

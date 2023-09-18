@@ -63,14 +63,16 @@ class converter(base_converter):
                 self.converted_dict[label["file_name"]] = {"objects": []}
 
             self.converted_dict[label["file_name"]]["objects"].append(converted_label)
-            p_bar.update(1)
-        self.save(tgt_path, None, None)
 
-    def save(self, tgt_path, suffix, converted_dict):
+            p_bar.update(1)
+
+        self.save(tgt_path)
+
+    def save(self, tgt_path):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        for key, value in self.converted_dict.items():
+        for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
             file_name, _ = os.path.splitext(key)
             annos = {"annotations": value}
             xml = ET.fromstring(xmltodict.unparse(annos, full_document=False, pretty=True))

@@ -13,7 +13,7 @@ class base_converter(ABC):
         pass
 
     @abstractmethod
-    def save(self, tgt_path, suffix, converted_str):
+    def save(self, tgt_path):
         pass
 
     @staticmethod
