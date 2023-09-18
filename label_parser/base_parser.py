@@ -6,6 +6,7 @@ class base_parser(ABC):
     def __init__(self, config):
         self.config = config
         self.label_dict = label_dict.label_
+        self.p_bar = None
 
     @staticmethod
     def check_none_txt(lst, idx):
@@ -39,5 +40,5 @@ class base_parser(ABC):
                 cy + h / 2]
 
     @abstractmethod
-    def parse(self, user_label_path):
+    def parse(self, user_label_path, p_bar_need):
         pass

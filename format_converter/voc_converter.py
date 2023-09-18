@@ -21,11 +21,11 @@ default_label = {
 
 
 class converter(base_converter):
-    def __init__(self, add_extra=True):
-        super().__init__(default_label=default_label, add_extra=add_extra, extension='txt')
-        self.converted_dict = {}
+    def __init__(self, add_extra=True, split_file=True):
+        super().__init__(default_label=default_label, split_file=split_file, add_extra=add_extra, extension='xml')
+        self.converted_dict = {"annotations": []}
 
-    def convert(self, parsed_user_label):
+    def convert(self, parsed_user_label, tgt_path):
         """
         original VOC2012 label format :
         <'annotation'>
@@ -43,8 +43,12 @@ class converter(base_converter):
             </'object'>
         </'annotation'>
         """
-        for label in tqdm(parsed_user_label, desc="convert", leave=False):
+        p_bar = tqdm(total=len(parsed_user_label), desc="annotations converting", leave=True)
+
+        while parsed_user_label:
             converted_label = deepcopy(self.default_label)
+            label = parsed_user_label.pop(0)
+
             converted_label["name"] = label["class"]
             converted_label["bndbox"]["xmin"] = label["2dbbox"][0]
             converted_label["bndbox"]["ymin"] = label["2dbbox"][1]
@@ -57,32 +61,14 @@ class converter(base_converter):
 
             converted_label = {"objects": converted_label}
 
-            if not self.split_file:
-                if "annotations" not in self.converted_dict:
-                    self.converted_dict["annotations"] = []
-                self.converted_dict["annotations"].append(converted_label)
-            else:
-                if label["file_name"] not in self.converted_dict:
-                    self.converted_dict[label["file_name"]] = {"annotations": []}
-                self.converted_dict[label["file_name"]]["annotations"].append(converted_label)
+            self.converted_dict["annotations"].append(converted_label)
+            p_bar.update(1)
+        self.save(tgt_path, 'annotations', None)
 
-    def save(self, tgt_path):
+    def save(self, tgt_path, suffix, converted_dict):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        if not self.split_file:
-            xml = ET.fromstring(xmltodict.unparse(self.converted_dict, pretty=True))
-            f = EET(xml)
-            f.write(f'{tgt_path}/annotations.{self.extension}', xml_declaration=False)
-        else:
-            for key, value in self.converted_dict.items():
-                file_name, _ = os.path.splitext(key)
-                xml = ET.fromstring(xmltodict.unparse(value, pretty=True))
-                f = EET(xml)
-                f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)
-
-    def run(self, parsed_user_label, tgt_path):
-        if parsed_user_label["file_name"] is not None:
-            self.split_file = True
-        self.convert(parsed_user_label)
-        self.save(tgt_path)
+        xml = ET.fromstring(xmltodict.unparse(self.converted_dict, pretty=True))
+        f = EET(xml)
+        f.write(f'{tgt_path}/annotations.{self.extension}', xml_declaration=False)

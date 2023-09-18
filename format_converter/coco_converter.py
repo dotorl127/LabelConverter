@@ -5,22 +5,22 @@ import json
 from tqdm import tqdm
 
 default_label = {
-    "segmentation": [[float]],
-    "area": float,
-    "iscrowd": bool,
-    "image_id": int,
-    "bbox": [float],
-    "category_id": int,
-    "id": int
+    "segmentation": [[]],
+    "area": '',
+    "iscrowd": '',
+    "image_id": '',
+    "bbox": [],
+    "category_id": '',
+    "id": '',
 }
 
 
 class converter(base_converter):
-    def __init__(self, add_extra=True):
-        super().__init__(default_label=default_label, add_extra=add_extra)
-        self.converted_dict = {}
+    def __init__(self, add_extra=True, split_file=False):
+        super().__init__(default_label=default_label, split_file=split_file, add_extra=add_extra, extension='json')
+        self.converted_dict = {"annotations": []}
 
-    def convert(self, parsed_user_label):
+    def convert(self, parsed_user_label, tgt_path):
         """
         original COCO dataset label format :
         "annotations": [
@@ -35,8 +35,12 @@ class converter(base_converter):
             },
         ]
         """
-        for label in tqdm(parsed_user_label, desc="convert", leave=False):
-            converted_label = deepcopy(default_label)
+        p_bar = tqdm(total=len(parsed_user_label), desc="annotation converting", leave=True)
+
+        while parsed_user_label:
+            converted_label = deepcopy(self.default_label)
+            label = parsed_user_label.pop(0)
+
             converted_label["category_id"] = label["class"]
             converted_label["bbox"] = label["2dbbox"]
             converted_label["id"] = label["file_name"]
@@ -45,30 +49,13 @@ class converter(base_converter):
                 for key, value in label["extra"].items():
                     converted_label[key] = value
 
-            if not self.split_file:
-                if "annotations" not in self.converted_dict:
-                    self.converted_dict["annotations"] = []
-                self.converted_dict["annotations"].append(converted_label)
-            else:
-                if label["file_name"] not in self.converted_dict:
-                    self.converted_dict["file_name"] = []
-                self.converted_dict[label["file_name"]]["annotations"].append(converted_label)
+            self.converted_dict["annotations"].append(converted_label)
+            p_bar.update(1)
+        self.save(tgt_path, 'annotations', None)
 
-    def save(self, tgt_path):
+    def save(self, tgt_path, suffix, converted_dict):
         if not os.path.exists(tgt_path):
-            os.makedirs(tgt_path)
+            os.makedirs(tgt_path, exist_ok=True)
 
-        if not self.split_file:
-            with open(f'{tgt_path}/annotations.{self.extension}', 'w') as f:
-                json.dump(self.converted_dict, f, indent=4)
-        else:
-            for key, value in self.converted_dict.items():
-                file_name, _ = os.path.splitext(key)
-                with open(f'{tgt_path}/{key}.{self.extension}', 'w') as f:
-                    json.dump(value, f, indent=4)
-
-    def run(self, parsed_user_label, tgt_path):
-        if parsed_user_label["file_name"] is not None:
-            self.split_file = True
-        self.convert(parsed_user_label)
-        self.save(tgt_path)
+        with open(f'{tgt_path}/{suffix}.{self.extension}', 'a') as f:
+            json.dump(self.converted_dict, f, indent=4)

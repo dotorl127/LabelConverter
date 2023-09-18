@@ -2,18 +2,18 @@ from abc import ABC, abstractmethod
 
 
 class base_converter(ABC):
-    def __init__(self, default_label=None, add_extra=True, extension=None):
+    def __init__(self, default_label=None, add_extra=True, split_file=True, extension=None):
         self.default_label = default_label
         self.add_extra = add_extra
         self.extension = extension
-        self.split_file = False
+        self.split_file = split_file
 
     @abstractmethod
-    def convert(self, parsed_user_label):
+    def convert(self, parsed_user_label, tgt_path):
         pass
 
     @abstractmethod
-    def save(self, tgt_path):
+    def save(self, tgt_path, suffix, converted_str):
         pass
 
     @staticmethod
@@ -25,7 +25,3 @@ class base_converter(ABC):
                 y1 + h / 2,
                 w,
                 h]
-
-    @abstractmethod
-    def run(self, parsed_user_label, tgt_path):
-        pass

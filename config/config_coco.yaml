@@ -22,5 +22,5 @@ class: [ 'category_id' ]
     yaw:
 extra:
   'iscrowd': [ 'iscrowd' ]
-  'image_id': [ 'image_id' ]
-file_name: [ 'id' ]
+  'image_id': [ 'id' ]
+file_name: [ 'image_id' ]

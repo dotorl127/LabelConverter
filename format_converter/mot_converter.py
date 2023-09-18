@@ -10,13 +10,17 @@ class converter(base_converter):
         self.converted_str = ''
         self.converted_dict = {}
 
-    def convert(self, parsed_user_label):
+    def convert(self, parsed_user_label, tgt_path):
         """
         original MOT17 label format :
         Frame number, Identity number, Bounding box left, Bounding box top, Bounding box width, Bounding box height, Confidence score, Class, Visibility
         """
-        for label in tqdm(parsed_user_label, desc="convert", leave=False):
+        p_bar = tqdm(total=len(parsed_user_label), desc="annotation converting", leave=True)
+
+        while parsed_user_label:
             converted_label = deepcopy(self.default_label)
+            label = parsed_user_label.pop(0)
+
             converted_label[0] = label["class"]
             converted_label[4:8] = label["2dbbox"]
             converted_label[8] = label["3dbbox"]["dim"]["height"]
@@ -31,27 +35,13 @@ class converter(base_converter):
                     else:
                         converted_label += [value]
 
-            self.converted_str += ' '.join(list(map(str, converted_label))) + '\n'
+            converted_str = ' '.join(list(map(str, converted_label))) + '\n'
+            self.save(tgt_path, label["file_name"], converted_str)
+            p_bar.update(1)
 
-            if self.split_file:
-                self.converted_dict[label["file_name"]] += self.converted_str
-
-    def save(self, tgt_path):
+    def save(self, tgt_path, suffix, converted_dict):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        if not self.split_file:
-            with open(f'{tgt_path}/annotations.{self.extension}', 'w') as f:
-                f.write(self.converted_str)
-            self.converted_str = ''
-        else:
-            for key, value in self.converted_dict.items():
-                file_name, _ = os.path.splitext(key)
-                with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
-                    f.write(value)
-
-    def run(self, parsed_user_label, tgt_path):
-        if parsed_user_label["file_name"] is not None:
-            self.split_file = True
-        self.convert(parsed_user_label)
-        self.save(tgt_path)
+        with open(f'{tgt_path}/{suffix}.{self.extension}', 'a') as f:
+            f.write(converted_dict)
