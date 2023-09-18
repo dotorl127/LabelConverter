@@ -1,5 +1,5 @@
 ext: json
-anno_key: [ 'annotations' ]
+split_key: [ 'annotations' ]
 class: [ 'category_id' ]
 2Dbox:
   is_center: False

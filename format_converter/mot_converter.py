@@ -12,7 +12,7 @@ class converter(base_converter):
 
     def convert(self, parsed_user_label):
         """
-        original mot17 label format :
+        original MOT17 label format :
         Frame number, Identity number, Bounding box left, Bounding box top, Bounding box width, Bounding box height, Confidence score, Class, Visibility
         """
         for label in tqdm(parsed_user_label, desc="convert", leave=False):
@@ -33,26 +33,25 @@ class converter(base_converter):
 
             self.converted_str += ' '.join(list(map(str, converted_label))) + '\n'
 
-            if label["file_name"] is not None:
+            if self.split_file:
                 self.converted_dict[label["file_name"]] += self.converted_str
-                self.converted_str = ''
 
-    def save(self, tgt_path, file_name):
+    def save(self, tgt_path):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        file_name, _ = os.path.splitext(file_name)
-        if self.converted_str != '':
-            with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
+        if not self.split_file:
+            with open(f'{tgt_path}/annotations.{self.extension}', 'w') as f:
                 f.write(self.converted_str)
             self.converted_str = ''
-
-        if len(self.converted_dict) != 0:
+        else:
             for key, value in self.converted_dict.items():
                 file_name, _ = os.path.splitext(key)
                 with open(f'{tgt_path}/{file_name}.{self.extension}', 'w') as f:
                     f.write(value)
 
-    def run(self, parsed_user_label, tgt_path, file_name):
+    def run(self, parsed_user_label, tgt_path):
+        if parsed_user_label["file_name"] is not None:
+            self.split_file = True
         self.convert(parsed_user_label)
-        self.save(tgt_path, file_name)
+        self.save(tgt_path)

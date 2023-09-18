@@ -15,9 +15,11 @@ class converter(base_converter):
         """
         self.converted_label = deepcopy(self.default_label)
 
-    def save(self, tgt_path, file_name):
+    def save(self, tgt_path):
         self.converted_label = None
 
-    def run(self, parsed_user_label, tgt_path, file_name):
+    def run(self, parsed_user_label, tgt_path):
+        if parsed_user_label["file_name"] is not None:
+            self.split_file = True
         self.convert(parsed_user_label)
-        self.save(tgt_path, file_name)
+        self.save(tgt_path)

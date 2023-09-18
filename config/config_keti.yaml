@@ -1,5 +1,5 @@
 ext: json
-anno_key: [ 'data' ]
+split_key: [ 'data' ]
 class: [ 'category', '0', 'id' ]
 2Dbox:
   is_center: False

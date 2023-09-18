@@ -1,3 +1,4 @@
+import os
 from .base_parser import base_parser
 import json
 from copy import deepcopy
@@ -13,7 +14,7 @@ class parser(base_parser):
         with open(user_label_path, 'r') as f:
             labels = json.load(f)
 
-        for label in self.check_none_json(labels, self.config["anno_key"]):
+        for label in self.check_none_json(labels, self.config["split_key"]):
             label_parsed = deepcopy(self.label_dict)
 
             class_label = label
@@ -49,6 +50,8 @@ class parser(base_parser):
             if self.config["file_name"] is not None:
                 file_name_label = label
                 label_parsed["file_name"] = self.check_none_json(file_name_label, self.config["file_name"])
+            else:
+                label_parsed["file_name"] = os.path.basename(user_label_path)
 
             label_list.append(label_parsed)
 

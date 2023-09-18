@@ -5,7 +5,6 @@ from tqdm import tqdm
 import xmltodict
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import ElementTree as EET
-from collections import defaultdict
 
 default_label = {
     'name': '',
@@ -28,7 +27,7 @@ class converter(base_converter):
 
     def convert(self, parsed_user_label):
         """
-        original voc12 label format :
+        original VOC2012 label format :
         <'annotation'>
             <'object'>
                 <'name'></'name'>
@@ -58,21 +57,32 @@ class converter(base_converter):
 
             converted_label = {"objects": converted_label}
 
-            if label["file_name"] is not None:
+            if not self.split_file:
+                if "annotations" not in self.converted_dict:
+                    self.converted_dict["annotations"] = []
+                self.converted_dict["annotations"].append(converted_label)
+            else:
                 if label["file_name"] not in self.converted_dict:
-                    self.converted_dict[label["file_name"]] = defaultdict(list)
+                    self.converted_dict[label["file_name"]] = {"annotations": []}
                 self.converted_dict[label["file_name"]]["annotations"].append(converted_label)
 
-    def save(self, tgt_path, file_name):
+    def save(self, tgt_path):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        file_name, _ = os.path.splitext(file_name)
-        if len(self.converted_dict) != 0:
+        if not self.split_file:
             xml = ET.fromstring(xmltodict.unparse(self.converted_dict, pretty=True))
             f = EET(xml)
-            f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)
+            f.write(f'{tgt_path}/annotations.{self.extension}', xml_declaration=False)
+        else:
+            for key, value in self.converted_dict.items():
+                file_name, _ = os.path.splitext(key)
+                xml = ET.fromstring(xmltodict.unparse(value, pretty=True))
+                f = EET(xml)
+                f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)
 
-    def run(self, parsed_user_label, tgt_path, file_name):
+    def run(self, parsed_user_label, tgt_path):
+        if parsed_user_label["file_name"] is not None:
+            self.split_file = True
         self.convert(parsed_user_label)
-        self.save(tgt_path, file_name)
+        self.save(tgt_path)

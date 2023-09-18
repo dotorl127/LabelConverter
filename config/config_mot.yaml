@@ -1,5 +1,5 @@
 ext: text
-anno_key: ', '
+split_key: ', '
 class: 7
 2Dbox:
   is_center: False

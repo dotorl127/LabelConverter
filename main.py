@@ -48,11 +48,11 @@ def main(args):
     assert parser is not None, "Not found parser"
 
     converter = getattr(
-        __import__(f'format_converter.{args.tgt_label_type}_converter', fromlist=["format_converter"]), 'converter')(True)
+        __import__(f'format_converter.{args.tgt_label_type}_converter',
+                   fromlist=["format_converter"]), 'converter')(True if len(config['extra']) else False)
     assert converter is not None, "Not found converter"
 
     src_labels = None
-
     if os.path.isfile(args.input_label_path):
         src_labels = [args.input_label_path.split('/')[-1]]
         args.input_label_path = os.path.dirname(args.input_label_path)
@@ -60,9 +60,10 @@ def main(args):
         src_labels = os.listdir(args.input_label_path)
     assert src_labels is not None, 'Not found annotations file/directory'
 
+    parsed_user_label = None
     for src_label in tqdm(src_labels, desc="files"):
         parsed_user_label = parser.parse(f'{args.input_label_path}/{src_label}')
-        converter.run(parsed_user_label, args.output_label_dir, src_label)
+    converter.run(parsed_user_label, args.output_label_dir)
 
 
 if __name__ == '__main__':

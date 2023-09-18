@@ -1,5 +1,5 @@
-from .base_parser import base_parser
 import os
+from .base_parser import base_parser
 from copy import deepcopy
 
 
@@ -16,7 +16,7 @@ class parser(base_parser):
         for label in labels:
             label_parsed = deepcopy(self.label_dict)
 
-            split_label = label.strip().split(self.config["anno_key"])
+            split_label = label.strip().split(self.config["split_key"])
 
             label_parsed["class"] = self.check_none_txt(split_label, self.config["class"])
 
@@ -43,6 +43,8 @@ class parser(base_parser):
 
             if self.config["file_name"] is not None:
                 label_parsed["file_name"] = self.check_none_txt(split_label, os.path.basename(user_label_path))
+            else:
+                label_parsed["file_name"] = os.path.basename(user_label_path)
 
             label_list.append(label_parsed)
 

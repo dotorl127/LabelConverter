@@ -6,13 +6,14 @@ class base_converter(ABC):
         self.default_label = default_label
         self.add_extra = add_extra
         self.extension = extension
+        self.split_file = False
 
     @abstractmethod
     def convert(self, parsed_user_label):
         pass
 
     @abstractmethod
-    def save(self, tgt_path, file_name):
+    def save(self, tgt_path):
         pass
 
     @staticmethod
@@ -26,5 +27,5 @@ class base_converter(ABC):
                 h]
 
     @abstractmethod
-    def run(self, parsed_user_label, tgt_path, file_name):
+    def run(self, parsed_user_label, tgt_path):
         pass
