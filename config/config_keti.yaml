@@ -2,7 +2,7 @@ ext: json
 split_key: [ 'data' ]
 class: [ 'category', '0', 'id' ]
 2Dbox:
-  is_center: False
+  coord_type: 'xyxy'
   coord: [ [ 'bbox', '0' ],
            [ 'bbox', '1' ],
            [ 'bbox', '2' ],

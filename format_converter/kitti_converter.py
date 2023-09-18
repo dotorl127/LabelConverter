@@ -5,11 +5,11 @@ from tqdm import tqdm
 
 
 class converter(base_converter):
-    def __init__(self, add_extra=True, split_file=True):
-        super().__init__(default_label=[-99] * 13, add_extra=add_extra, split_file=split_file, extension='txt')
+    def __init__(self, add_extra=True, tgt_path=None):
+        super().__init__(default_label=[-99] * 13, add_extra=add_extra, tgt_path=tgt_path, extension='txt')
         self.converted_dict = {}
 
-    def convert(self, parsed_user_label, tgt_path):
+    def convert(self, parsed_user_label):
         """
         original KITTI label format :
         type truncated occluded alpha bbox(x1, y1, x2, y2) dimensions(height, width, length) location(x, y, z) rotation_y socre
@@ -40,12 +40,9 @@ class converter(base_converter):
 
             p_bar.update(1)
 
-        self.save(tgt_path)
-
-    def save(self, tgt_path):
-        if not os.path.exists(tgt_path):
-            os.makedirs(tgt_path, exist_ok=True)
-
+    def save(self):
         for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
-            with open(f'{tgt_path}/{key}.{self.extension}', 'w') as f:
+            file_name, _ = os.path.splitext(key)
+            file_name = f'{int(file_name):06d}' if file_name.isdecimal() else file_name
+            with open(f'{self.tgt_path}/{file_name}.{self.extension}', 'w') as f:
                 f.write(value)

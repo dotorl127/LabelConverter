@@ -60,7 +60,7 @@ def main(args):
     converter = getattr(
         __import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
                    fromlist=["format_converter"]), 'converter')(True if len(config['extra']) else False,
-                                                                True if config["file_name"] else False)
+                                                                args.output_label_dir)
     assert converter is not None, "Not found converter"
 
     is_file, src_labels = redirect_path(args.input_label_path)
@@ -69,10 +69,14 @@ def main(args):
         parsed_user_label = []
         for src_label in tqdm(src_labels, desc="annotations parsing"):
             parsed_user_label += parser.parse(f'{args.input_label_path}/{src_label}', p_bar_need=False)
-        converter.convert(parsed_user_label, args.output_label_dir)
     else:
         parsed_user_label = parser.parse(src_labels, p_bar_need=True)
-        converter.convert(parsed_user_label, args.output_label_dir)
+
+    converter.convert(parsed_user_label)
+
+    if not os.path.exists(args.output_label_dir):
+        os.makedirs(args.output_label_dir)
+    converter.save()
 
 
 if __name__ == '__main__':

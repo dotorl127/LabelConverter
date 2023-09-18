@@ -28,8 +28,10 @@ class parser(base_parser):
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][1]),
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][2]),
                                       self.check_none_txt(split_label, self.config["2Dbox"]["coord"][3])]
-            if self.config["2Dbox"]["is_center"] and None not in label_parsed["2dbbox"]:
-                label_parsed["2dbbox"] = self.ccwh2xyxy(label_parsed["2dbbox"])
+
+            if self.config["2Dbox"]["coord_type"] != 'xyxy':
+                label_parsed["2dbbox"] = (
+                    self.__getattribute__(f'{self.config["2Dbox"]["coord_type"]}2xyxy')(label_parsed["2dbbox"]))
 
             label_parsed["3dbbox"]["loc"]["x"] = self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["x"])
             label_parsed["3dbbox"]["loc"]["y"] = self.check_none_txt(split_label, self.config["3Dbox"]["loc"]["y"])

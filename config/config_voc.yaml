@@ -2,7 +2,7 @@ ext: xml
 split_key: [ 'annotation', 'object' ]
 class: [ 'name' ]
 2Dbox:
-  is_center: False
+  coord_type: 'xyxy'
   coord: [ [ 'nbdbox', 'xmin' ],
            [ 'nbdbox', 'ymin' ],
            [ 'nbdbox', 'xmax' ],

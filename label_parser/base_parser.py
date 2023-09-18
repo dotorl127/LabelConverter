@@ -33,11 +33,19 @@ class base_parser(ABC):
 
     @staticmethod
     def ccwh2xyxy(coord):
-        cx, cy, w, h = float(coord)
-        return [cx - w / 2,
-                cy - h / 2,
-                cx + w / 2,
-                cy + h / 2]
+        cx, cy, w, h = list(map(float, coord))
+        return [round(cx - w / 2, 3),
+                round(cy - h / 2, 3),
+                round(cx + w / 2, 3),
+                round(cy + h / 2, 3)]
+
+    @staticmethod
+    def xywh2xyxy(coord):
+        x, y, w, h = list(map(float, coord))
+        return [round(x, 3),
+                round(y, 3),
+                round(x + w, 3),
+                round(y + h, 3)]
 
     @abstractmethod
     def parse(self, user_label_path, p_bar_need):

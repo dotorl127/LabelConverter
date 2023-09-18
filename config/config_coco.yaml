@@ -2,7 +2,7 @@ ext: json
 split_key: [ 'annotations' ]
 class: [ 'category_id' ]
 2Dbox:
-  is_center: False
+  coord_type: 'xywh'
   coord: [ [ 'bbox', '0' ],
            [ 'bbox', '1' ],
            [ 'bbox', '2' ],

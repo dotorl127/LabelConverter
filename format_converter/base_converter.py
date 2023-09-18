@@ -2,18 +2,18 @@ from abc import ABC, abstractmethod
 
 
 class base_converter(ABC):
-    def __init__(self, default_label=None, add_extra=True, split_file=True, extension=None):
+    def __init__(self, default_label=None, add_extra=True, tgt_path=None, extension=None):
         self.default_label = default_label
         self.add_extra = add_extra
         self.extension = extension
-        self.split_file = split_file
+        self.tgt_path = tgt_path
 
     @abstractmethod
-    def convert(self, parsed_user_label, tgt_path):
+    def convert(self, parsed_user_label):
         pass
 
     @abstractmethod
-    def save(self, tgt_path):
+    def save(self):
         pass
 
     @staticmethod

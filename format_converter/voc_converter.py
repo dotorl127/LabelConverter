@@ -21,11 +21,11 @@ default_label = {
 
 
 class converter(base_converter):
-    def __init__(self, add_extra=True, split_file=True):
-        super().__init__(default_label=default_label, split_file=split_file, add_extra=add_extra, extension='xml')
+    def __init__(self, add_extra=True, tgt_path=None):
+        super().__init__(default_label=default_label, add_extra=add_extra, tgt_path=tgt_path, extension='xml')
         self.converted_dict = {}
 
-    def convert(self, parsed_user_label, tgt_path):
+    def convert(self, parsed_user_label):
         """
         original VOC2012 label format :
         <'annotation'>
@@ -66,15 +66,11 @@ class converter(base_converter):
 
             p_bar.update(1)
 
-        self.save(tgt_path)
-
-    def save(self, tgt_path):
-        if not os.path.exists(tgt_path):
-            os.makedirs(tgt_path)
-
+    def save(self):
         for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
             file_name, _ = os.path.splitext(key)
             annos = {"annotations": value}
             xml = ET.fromstring(xmltodict.unparse(annos, full_document=False, pretty=True))
             f = EET(xml)
-            f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)
+            file_name = f'{int(file_name):06d}' if file_name.isdecimal() else file_name
+            f.write(f'{self.tgt_path}/{file_name}.{self.extension}', xml_declaration=False)

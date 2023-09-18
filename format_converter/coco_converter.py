@@ -16,11 +16,11 @@ default_label = {
 
 
 class converter(base_converter):
-    def __init__(self, add_extra=True, split_file=False):
-        super().__init__(default_label=default_label, split_file=split_file, add_extra=add_extra, extension='json')
+    def __init__(self, add_extra=True, tgt_path=None):
+        super().__init__(default_label=default_label, add_extra=add_extra, tgt_path=tgt_path, extension='json')
         self.converted_dict = {"annotations": []}
 
-    def convert(self, parsed_user_label, tgt_path):
+    def convert(self, parsed_user_label):
         """
         original COCO dataset label format :
         "annotations": [
@@ -35,7 +35,7 @@ class converter(base_converter):
             },
         ]
         """
-        p_bar = tqdm(total=len(parsed_user_label), desc="annotation converting", leave=True)
+        p_bar = tqdm(total=len(parsed_user_label), desc="annotations converting", leave=True)
 
         while parsed_user_label:
             converted_label = deepcopy(self.default_label)
@@ -53,11 +53,6 @@ class converter(base_converter):
 
             p_bar.update(1)
 
-        self.save(tgt_path)
-
-    def save(self, tgt_path):
-        if not os.path.exists(tgt_path):
-            os.makedirs(tgt_path, exist_ok=True)
-
-        with open(f'{tgt_path}/annotations.{self.extension}', 'w') as f:
+    def save(self):
+        with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
             json.dump(self.converted_dict, f, indent=4)
