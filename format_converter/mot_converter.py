@@ -7,7 +7,7 @@ from tqdm import tqdm
 class converter(base_converter):
     def __init__(self, add_extra=True, tgt_path=None):
         super().__init__(default_label=[-99] * 9, add_extra=add_extra, tgt_path=tgt_path, extension='txt')
-        self.converted_dict = ''
+        self.converted_dict = {}
 
     def convert(self, parsed_user_label):
         """
@@ -34,10 +34,16 @@ class converter(base_converter):
                     else:
                         converted_label += [value]
 
-            self.converted_dict += ', '.join(list(map(str, converted_label))) + '\n'
+            if file_name not in self.converted_dict:
+                self.converted_dict[file_name] = ''
+            self.converted_dict[file_name] += ' '.join(list(map(str, converted_label))) + '\n'
 
             p_bar.update(1)
 
+        # TODO: sorted by key numerical order
+        self.converted_dict = OrderedDict(sorted(self.converted_dict.items()))
+
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
-            f.write(self.converted_dict)
+            for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
+                f.write(value)
