@@ -5,13 +5,13 @@ import json
 from tqdm import tqdm
 
 default_label = {
-    "segmentation": [[]],
-    "area": '',
-    "iscrowd": '',
-    "image_id": '',
-    "bbox": [],
-    "category_id": '',
-    "id": '',
+    "segmentation": [[-99]],
+    "area": '-99',
+    "iscrowd": '-99',
+    "image_id": '-99',
+    "bbox": [-99],
+    "category_id": '-99',
+    "id": '-99',
 }
 
 

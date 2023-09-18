@@ -7,15 +7,15 @@ from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import ElementTree as EET
 
 default_label = {
-    'name': '',
-    'pose': '',
-    'truncated': '',
-    'difficult': '',
+    'name': '-99',
+    'pose': '-99',
+    'truncated': '-99',
+    'difficult': '-99',
     'bndbox': {
-        'xmin': '',
-        'ymin': '',
-        'xmax': '',
-        'ymax': ''
+        'xmin': '-99',
+        'ymin': '-99',
+        'xmax': '-99',
+        'ymax': '-99'
     }
 }
 
@@ -23,7 +23,7 @@ default_label = {
 class converter(base_converter):
     def __init__(self, add_extra=True, split_file=True):
         super().__init__(default_label=default_label, split_file=split_file, add_extra=add_extra, extension='xml')
-        self.converted_dict = {"annotations": []}
+        self.converted_dict = {}
 
     def convert(self, parsed_user_label, tgt_path):
         """
@@ -59,16 +59,20 @@ class converter(base_converter):
                 for k, v in label["extra"].items():
                     converted_label[k] = v
 
-            converted_label = {"objects": converted_label}
+            if label["file_name"] not in self.converted_dict:
+                self.converted_dict[label["file_name"]] = {"objects": []}
 
-            self.converted_dict["annotations"].append(converted_label)
+            self.converted_dict[label["file_name"]]["objects"].append(converted_label)
             p_bar.update(1)
-        self.save(tgt_path, 'annotations', None)
+        self.save(tgt_path, None, None)
 
     def save(self, tgt_path, suffix, converted_dict):
         if not os.path.exists(tgt_path):
             os.makedirs(tgt_path)
 
-        xml = ET.fromstring(xmltodict.unparse(self.converted_dict, pretty=True))
-        f = EET(xml)
-        f.write(f'{tgt_path}/annotations.{self.extension}', xml_declaration=False)
+        for key, value in self.converted_dict.items():
+            file_name, _ = os.path.splitext(key)
+            annos = {"annotations": value}
+            xml = ET.fromstring(xmltodict.unparse(annos, full_document=False, pretty=True))
+            f = EET(xml)
+            f.write(f'{tgt_path}/{file_name}.{self.extension}', xml_declaration=False)

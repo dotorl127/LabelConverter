@@ -11,7 +11,7 @@ def args_parser():
     parser.add_argument('-c', '--config_path', type=str, help='Location parse configuration file')
     parser.add_argument('-o', '--output_label_dir', type=str, help='Directory to save converted label')
     parser.add_argument('-t', '--tgt_label_type', type=str, default='',
-                        help='Dataset name to convert (kitti, coco, ...)')
+                        help='Dataset name to convert (kitti, coco, voc, mot)')
     return parser.parse_args()
 
 
@@ -58,7 +58,7 @@ def main(args):
     assert parser is not None, "Not found parser"
 
     converter = getattr(
-        __import__(f'format_converter.{args.tgt_label_type}_converter',
+        __import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
                    fromlist=["format_converter"]), 'converter')(True if len(config['extra']) else False,
                                                                 True if config["file_name"] else False)
     assert converter is not None, "Not found converter"
