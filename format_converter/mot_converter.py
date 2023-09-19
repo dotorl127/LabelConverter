@@ -2,6 +2,7 @@ import os
 from .base_converter import base_converter
 from copy import deepcopy
 from tqdm import tqdm
+from collections import OrderedDict
 
 
 class converter(base_converter):
@@ -39,11 +40,10 @@ class converter(base_converter):
             self.converted_dict[file_name] += ' '.join(list(map(str, converted_label))) + '\n'
 
             p_bar.update(1)
-
-        # TODO: sorted by key numerical order
-        self.converted_dict = OrderedDict(sorted(self.converted_dict.items()))
+        p_bar.close()
 
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
-            for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
+            for key, value in tqdm(sorted(self.converted_dict.items(), key=lambda x: int(x[0])),
+                                   desc="annotations saving", leave=True):
                 f.write(value)

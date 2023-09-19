@@ -65,6 +65,7 @@ class converter(base_converter):
             self.converted_dict[label["file_name"]]["objects"].append(converted_label)
 
             p_bar.update(1)
+        p_bar.close()
 
     def save(self):
         for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
