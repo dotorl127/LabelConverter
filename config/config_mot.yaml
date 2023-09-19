@@ -22,6 +22,6 @@ class: 7
     yaw:
 extra:
   identity_number: 1
-  confidence score: 6
+  confidence_score: 6
   visibility: 8
 file_name: 0

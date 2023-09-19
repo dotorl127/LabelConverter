@@ -50,14 +50,14 @@ class converter(base_converter):
             label = parsed_user_label.pop(0)
 
             converted_label["name"] = label["class"]
-            converted_label["bndbox"]["xmin"] = label["2dbbox"][0]
-            converted_label["bndbox"]["ymin"] = label["2dbbox"][1]
-            converted_label["bndbox"]["xmax"] = label["2dbbox"][2]
-            converted_label["bndbox"]["ymax"] = label["2dbbox"][3]
+            converted_label["bndbox"]["xmin"] = str(label["2dbbox"][0])
+            converted_label["bndbox"]["ymin"] = str(label["2dbbox"][1])
+            converted_label["bndbox"]["xmax"] = str(label["2dbbox"][2])
+            converted_label["bndbox"]["ymax"] = str(label["2dbbox"][3])
 
             if self.add_extra:
                 for k, v in label["extra"].items():
-                    converted_label[k] = v
+                    converted_label[k] = str(v)
 
             if label["file_name"] not in self.converted_dict:
                 self.converted_dict[label["file_name"]] = {"objects": []}
