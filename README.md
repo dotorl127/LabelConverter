@@ -27,9 +27,9 @@ pip install pyyaml tqdm xmltodict
 ### Arguments
 ```text
 -i, --input_label_path : user defined label location
--c, --config_path : user defined label's configuration YAML file for parse
+-c, --config_path : configuration YAML file for parse user defined format
 -o, --output_label_dir : output directory for save converted label
--t, --tgt_label_type : dataset/label type for convert user defined label
+-t, --tgt_label_type : dataset/label type want to convert
                        current support [KITTI, COCO, VOC, MOT]
 ```
 
