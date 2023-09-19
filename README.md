@@ -48,5 +48,6 @@ python main.py -i {user defined label path}
   - incase json, xml or hierarchy exists write start to end node to reach attribute
 
 ## How to custom converter
-- create parser module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
-- should write code into convert class function for convert parsed label.
+- create converter module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
+- should write code into class function named [convert](./format_converter/template_converter.py#L11) for convert parsed label.
+- if need convert coordinates format want from x1, y1, x2, y1
