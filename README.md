@@ -33,9 +33,9 @@ pip install pyyaml tqdm xmltodict
                          current support [KITTI, COCO, VOC, MOT]
 ```
 
-### Command line
+### Example command line
 ```commandline
-(example)$ python main.py -i ./somewhere/to/coco -c ./config/config_coco.yaml -o ./test_result/ -t kitti 
+$ python main.py -i ./somewhere/to/coco -c ./config/config_coco.yaml -o ./test_result/ -t kitti 
 ```
 
 ## How to custom
