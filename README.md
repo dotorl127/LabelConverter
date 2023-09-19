@@ -12,7 +12,7 @@
 - [x] organize repository(base logic, template code)
 - [x] initialize repository
 
-## Support dataset label
+## Support annotation format
 - [KITTI](https://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d)
 - [COCO](https://cocodataset.org/#download)
 - [VOC](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html)
