@@ -1,4 +1,3 @@
-import os
 from .base_converter import base_converter
 from copy import deepcopy
 import json
