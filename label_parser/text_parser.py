@@ -48,7 +48,7 @@ class parser(base_parser):
                     label_parsed["extra"][key] = self.check_none_txt(split_label, value)
 
             if self.config["file_name"] is not None:
-                label_parsed["file_name"] = str(self.check_none_txt(split_label, os.path.basename(user_label_path)))
+                label_parsed["file_name"] = str(self.check_none_txt(split_label, self.config["file_name"]))
             else:
                 label_parsed["file_name"] = str(os.path.basename(user_label_path))
 
