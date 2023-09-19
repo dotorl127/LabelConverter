@@ -50,21 +50,29 @@ def main(args):
     args.input_label_path = args.input_label_path.rstrip("/")
     args.output_label_dir = args.output_label_dir.rstrip("/")
 
+    # parsing configuration file
     config = parse_config(args.config_path)
     assert config is not None, 'Invalid configuration file'
 
-    parser = getattr(
-        __import__(f'label_parser.{config["ext"]}_parser', fromlist=["label_parser"]), 'parser')(config)
+    # import parser module
+    parser = (getattr(
+        __import__(f'label_parser.{config["ext"]}_parser',
+                   fromlist=["label_parser"]), 'parser')
+              (config))
     assert parser is not None, "Not found parser"
 
-    converter = getattr(
+    # import converter module
+    converter = (getattr(
         __import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
-                   fromlist=["format_converter"]), 'converter')(True if len(config['extra']) else False,
-                                                                args.output_label_dir)
+                   fromlist=["format_converter"]), 'converter')
+                 (True if len(config['extra']) else False,
+                  args.output_label_dir))
     assert converter is not None, "Not found converter"
 
+    # modify input path
     is_file, src_labels = redirect_path(args.input_label_path)
 
+    # parsing input label and convert to default label format
     if not is_file:
         parsed_user_label = []
         for src_label in tqdm(src_labels, desc="annotations parsing", leave=True):
@@ -72,8 +80,10 @@ def main(args):
     else:
         parsed_user_label = parser.parse(src_labels, p_bar_need=True)
 
+    # converting default label format to want
     converter.convert(parsed_user_label)
 
+    # save converted label
     if not os.path.exists(args.output_label_dir):
         os.makedirs(args.output_label_dir)
     converter.save()
