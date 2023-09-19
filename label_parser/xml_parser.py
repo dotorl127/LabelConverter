@@ -31,8 +31,8 @@ class parser(base_parser):
                 label_parsed["2dbbox"].append(self.check_none_json(bbox2d_label, k_in_d))
 
             if self.config["2Dbox"]["coord_type"] != 'xyxy':
-                label_parsed["2dbbox"] = (
-                    self.__getattribute__(f'{self.config["2Dbox"]["coord_type"]}2xyxy')(label_parsed["2dbbox"]))
+                label_parsed["2dbbox"] \
+                    = self.__getattribute__(f'{self.config["2Dbox"]["coord_type"]}2xyxy')(label_parsed["2dbbox"])
 
             if self.config["extra"] is not None:
                 for key, value in self.config["extra"].items():
