@@ -55,18 +55,17 @@ def main(args):
     assert config is not None, 'Invalid configuration file'
 
     # import parser module
-    parser = (getattr(
-        __import__(f'label_parser.{config["ext"]}_parser',
-                   fromlist=["label_parser"]), 'parser')
-              (config))
+    parser \
+        = (getattr(__import__(f'label_parser.{config["ext"]}_parser',
+                              fromlist=["label_parser"]), 'parser')
+           (config))
     assert parser is not None, "Not found parser"
 
     # import converter module
-    converter = (getattr(
-        __import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
-                   fromlist=["format_converter"]), 'converter')
-                 (True if len(config['extra']) else False,
-                  args.output_label_dir))
+    converter \
+        = (getattr(__import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
+                              fromlist=["format_converter"]), 'converter')
+           (True if len(config['extra']) else False,args.output_label_dir))
     assert converter is not None, "Not found converter"
 
     # modify input path
