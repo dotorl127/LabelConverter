@@ -49,4 +49,4 @@ pip install pyyaml tqdm xmltodict
 ### Converter
 - create converter module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
 - should write code into class function named [convert](./format_converter/template_converter.py#L11), [save](./format_converter/template_converter.py#L18) for convert parsed label and saving output.
-- if need convert coordinates format want from x1, y1, x2, y1
+- if need convert coordinates format want from x1, y1, x2, y2
