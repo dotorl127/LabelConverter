@@ -1,6 +1,6 @@
 # userDFlabel_cvt
-- convert user defined label to known dataset label(etc. KITTI, COCO)
-- read configuration YAML file and parse user defined label architecture
+- convert user defined label to known dataset label(etc. KITTI, COCO, VOC, MOT)
+- read configuration YAML file and parse user defined format
 
 ## Updates
 ### October 2023
