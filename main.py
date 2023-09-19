@@ -1,8 +1,8 @@
 import os
 import argparse
-
 import yaml
 from tqdm import tqdm
+import time
 
 
 def args_parser():
@@ -11,7 +11,7 @@ def args_parser():
     parser.add_argument('-c', '--config_path', type=str, help='Location parse configuration file')
     parser.add_argument('-o', '--output_label_dir', type=str, help='Directory to save converted label')
     parser.add_argument('-t', '--tgt_label_type', type=str, default='',
-                        help='Dataset name to convert (kitti, coco, voc, mot)')
+                        help='Dataset name to convert [kitti, coco, voc, mot]')
     return parser.parse_args()
 
 
@@ -19,7 +19,7 @@ def config_validation(config):
     """
     if need add configuration file validation code
     """
-    if config['ext'] == 'text' and not config['split']:
+    if not config['split']:
         return None
 
     return config
@@ -67,7 +67,7 @@ def main(args):
 
     if not is_file:
         parsed_user_label = []
-        for src_label in tqdm(src_labels, desc="annotations parsing"):
+        for src_label in tqdm(src_labels, desc="annotations parsing", leave=True):
             parsed_user_label += parser.parse(f'{args.input_label_path}/{src_label}', p_bar_need=False)
     else:
         parsed_user_label = parser.parse(src_labels, p_bar_need=True)

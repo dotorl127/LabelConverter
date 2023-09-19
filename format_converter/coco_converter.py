@@ -53,6 +53,8 @@ class converter(base_converter):
 
             p_bar.update(1)
 
+        p_bar.close()
+
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
             json.dump(self.converted_dict, f, indent=4)

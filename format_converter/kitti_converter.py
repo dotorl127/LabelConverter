@@ -40,6 +40,8 @@ class converter(base_converter):
 
             p_bar.update(1)
 
+        p_bar.close()
+
     def save(self):
         for key, value in tqdm(self.converted_dict.items(), desc="annotations saving", leave=True):
             file_name, _ = os.path.splitext(key)

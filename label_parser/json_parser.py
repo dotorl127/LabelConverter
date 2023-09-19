@@ -64,4 +64,7 @@ class parser(base_parser):
             if self.p_bar:
                 self.p_bar.update(1)
 
+        if self.p_bar:
+            self.p_bar.close()
+
         return label_list

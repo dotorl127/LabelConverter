@@ -41,6 +41,8 @@ class converter(base_converter):
 
             p_bar.update(1)
 
+        p_bar.close()
+
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
             for key, value in tqdm(sorted(self.converted_dict.items(), key=lambda x: int(x[0])),
