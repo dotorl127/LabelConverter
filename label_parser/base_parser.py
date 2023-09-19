@@ -22,13 +22,13 @@ class base_parser(ABC):
             return None
         else:
             for value in key_in_dict:
-                if type(key) is list:
+                if isinstance(key, list):
                     value = int(value)
-                    if value < len(key):
-                        key = key[value]
-                elif type(key) is dict:
-                    if value in key:
-                        key = key[value]
+                    assert value < len(key), f'{value} out of range {len(key)}'
+                    key = key[value]
+                elif isinstance(key, dict):
+                    assert value in key, f'{value} not in {key}'
+                    key = key[value]
             return key
 
     @staticmethod

@@ -3,10 +3,10 @@ split_key: [ 'annotation', 'object' ]
 class: [ 'name' ]
 2Dbox:
   coord_type: 'xyxy'
-  coord: [ [ 'nbdbox', 'xmin' ],
-           [ 'nbdbox', 'ymin' ],
-           [ 'nbdbox', 'xmax' ],
-           [ 'nbdbox', 'ymax' ] ]
+  coord: [ [ 'bndbox', 'xmin' ],
+           [ 'bndbox', 'ymin' ],
+           [ 'bndbox', 'xmax' ],
+           [ 'bndbox', 'ymax' ] ]
 3Dbox:
   loc:
     x:
@@ -22,6 +22,5 @@ class: [ 'name' ]
     yaw:
 extra:
   'pose': [ 'pose' ]
-  'truncated': [ 'truncated' ]
   'difficult': [ 'difficult' ]
 file_name:

@@ -16,6 +16,8 @@ class parser(base_parser):
             labels = f.read()
             labels = xmltodict.parse(labels)
             labels = self.check_none_json(labels, self.config["split_key"])
+            if isinstance(labels, dict):
+                labels = [labels]
 
         if p_bar_need:
             self.p_bar = tqdm(total=len(labels), desc="annotations parsing", leave=True)

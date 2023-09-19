@@ -24,7 +24,7 @@ class converter(base_converter):
             file_name, _ = os.path.splitext(label["file_name"])
             file_name = f'{int(file_name)}' if file_name.isdecimal() else file_name
             converted_label[0] = file_name
-            x1, y1, x2, y2 = label["2dbbox"]
+            x1, y1, x2, y2 = list(map(float, label["2dbbox"]))
             converted_label[2:6] = x1, y1, round(x2 - x1, 3), round(y2 - y1, 3)
             converted_label[7] = label["class"]
 

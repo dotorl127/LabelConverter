@@ -14,7 +14,9 @@ class parser(base_parser):
 
         with open(user_label_path, 'r') as f:
             labels = json.load(f)
-        labels = self.check_none_json(labels, self.config["split_key"])
+            labels = self.check_none_json(labels, self.config["split_key"])
+            if isinstance(labels, dict):
+                labels = [labels]
 
         if p_bar_need:
             self.p_bar = tqdm(total=len(labels), desc="annotations parsing", leave=True)
