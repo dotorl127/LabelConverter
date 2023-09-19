@@ -65,7 +65,7 @@ def main(args):
     converter \
         = (getattr(__import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
                               fromlist=["format_converter"]), 'converter')
-           (True if len(config['extra']) else False,args.output_label_dir))
+           (True if len(config['extra']) else False, args.output_label_dir))
     assert converter is not None, "Not found converter"
 
     # modify input path
