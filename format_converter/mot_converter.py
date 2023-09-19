@@ -40,7 +40,6 @@ class converter(base_converter):
             self.converted_dict[file_name] += ' '.join(list(map(str, converted_label))) + '\n'
 
             p_bar.update(1)
-        p_bar.close()
 
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
