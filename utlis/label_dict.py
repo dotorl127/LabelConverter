@@ -1,23 +1,23 @@
 label_ = {
-    'class': '',
+    'class': None,
     '2dbbox': [],
     '3dbbox': {
         'loc': {
-            'x': '',
-            'y': '',
-            'z': '',
+            'x': None,
+            'y': None,
+            'z': None,
         },
         'dim': {
-            'width': '',
-            'height': '',
-            'length': '',
+            'width': None,
+            'height': None,
+            'length': None,
         },
         'rot': {
-            'roll': '',
-            'pitch': '',
-            'yaw': '',
+            'roll': None,
+            'pitch': None,
+            'yaw': None,
         },
     },
     'extra': {},
-    'file_name': '',
+    'file_name': None,
 }
