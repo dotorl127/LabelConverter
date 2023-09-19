@@ -45,6 +45,7 @@ pip install pyyaml tqdm xmltodict
 - create configuration YAML file correctly could parse user defined label in [config](./config) directory
   - incase text type like csv just write column number each attribute
   - incase json, xml or hierarchy exists write start to end node to reach attribute
+  - :warning: **DO NOT include _space characters_ in attribute name**
 
 ### Converter
 - create converter module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
