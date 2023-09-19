@@ -34,15 +34,18 @@ pip install pyyaml tqdm xmltodict
 
 ### Command line
 ```commandline
-python main.py --i {user defined label path} 
-               --c {configuration YAML file path} 
-               --o {directory path output saved} 
-               --t {type for convert} 
+python main.py -i {user defined label path} 
+               -c {configuration YAML file path} 
+               -o {directory path output saved} 
+               -t {type for convert} 
 ```
 
 ## How to custom parser
 - create parser module using [base_parser.py](./label_parser/base_parser.py) in [label_parser](./label_parser) directory.
 - should coordinates format to x1, y1, x2, y2 using class function or custom function.
+- create configuration YAML file correctly could parse user defined label in [config](./config) directory
+  - incase text type like csv just write column number each attribute
+  - incase json, xml or hierarchy exists write start to end node to reach attribute
 
 ## How to custom converter
 - create parser module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
