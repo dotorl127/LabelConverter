@@ -9,7 +9,7 @@
 - [x] default support format(kitti, coco, voc, mot) convert test complete
 ### September 2023
 - [x] add kitti, coco converter
-- [x] organize base, template data and code
+- [x] organize repository(base logic, template code)
 - [x] initialize repository
 
 ## Support dataset label
