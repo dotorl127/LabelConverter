@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 
 class base_converter(ABC):

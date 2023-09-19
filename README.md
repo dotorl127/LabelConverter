@@ -48,6 +48,6 @@ $ python main.py -i ./somewhere/to/coco -c ./config/config_coco.yaml -o ./test_r
   - :warning: **DO NOT include _space characters_ in attribute name**
 
 ### Converter
-- create converter module using [template_converter.py](./format_converter/template_converter.py) in [format_converter](./format_converter) directory.
-- should write code into class function named [convert](./format_converter/template_converter.py#L11), [save](./format_converter/template_converter.py#L18) for convert parsed label and saving output.
+- create converter module using [base_converter.py](./format_converter/base_converter.py) in [format_converter](./format_converter) directory.
+- should write code into class function named [convert](./format_converter/base_converter.py#L13), [save](./format_converter/base_converter.py#L17) for convert parsed label and saving output.
 - if need convert coordinates format want from x1, y1, x2, y2
