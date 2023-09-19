@@ -35,10 +35,7 @@ pip install pyyaml tqdm xmltodict
 
 ### Command line
 ```commandline
-python main.py -i {user defined label path} 
-               -c {configuration YAML file path} 
-               -o {directory path output saved} 
-               -t {type for convert} 
+(example)$ python main.py -i ./somewhere/to/coco -c ./config/config_coco.yaml -o ./test_result/ -t kitti 
 ```
 
 ## How to custom parser
