@@ -6,7 +6,7 @@ def config_validation(config):
     """
     if need add configuration file validation code
     """
-    if not config['split']:
+    if not config['split_key']:
         return None
 
     return config

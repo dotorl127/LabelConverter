@@ -45,6 +45,7 @@ class converter(base_converter):
 
     def save(self):
         with open(f'{self.tgt_path}/annotations.{self.extension}', 'w') as f:
-            for key, value in tqdm(sorted(self.converted_dict.items(), key=lambda x: int(x[0])),
+            for key, value in tqdm(sorted(self.converted_dict.items(),
+                                          key=lambda x: int(x[0]) if str(x[0]).isdigit() else x[0]),
                                    desc="annotations saving", leave=True):
                 f.write(value)
