@@ -59,14 +59,14 @@ def main(args):
         = (getattr(__import__(f'label_parser.{config["ext"]}_parser',
                               fromlist=["label_parser"]), 'parser')
            (config))
-    assert parser is not None, "Not found parser"
+    assert parser is not None, f"Not found {config['ext']}_parser"
 
     # import converter module
     converter \
         = (getattr(__import__(f'format_converter.{args.tgt_label_type.lower()}_converter',
                               fromlist=["format_converter"]), 'converter')
            (True if len(config['extra']) else False, args.output_label_dir))
-    assert converter is not None, "Not found converter"
+    assert converter is not None, f"Not found {args.tgt_label_type.lower()}_converter"
 
     # modify input path
     is_file, src_labels = redirect_path(args.input_label_path)
