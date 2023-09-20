@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from utlis import label_dict
+from utils import label_dict
 
 
 class base_parser(ABC):
