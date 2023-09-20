@@ -6,6 +6,7 @@
 ### October 2023
 - [x] add voc, mot converter
 - [x] refactoring parse, convert logic
+- [x] bug fix and refactoring
 - [x] legacy format(kitti, coco, voc, mot) convert test complete
 ### September 2023
 - [x] add kitti, coco converter
