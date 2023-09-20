@@ -1,6 +1,6 @@
 # userDFlabel_cvt
 - convert user defined label to known annotations format(check supported format [below](#Support-annotation-format)) 
-- read configuration YAML file and parse user defined format
+- read [how to custom](#-How-to-custom) configuration YAML file and parse user defined format
 
 ## Updates
 ### October 2023
