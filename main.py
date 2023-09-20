@@ -2,7 +2,6 @@ import os
 import argparse
 import yaml
 from tqdm import tqdm
-import time
 
 
 def args_parser():
