@@ -30,6 +30,8 @@ def parse_config(yaml_path):
     with open(yaml_path, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
+    config = config_validation(config)
+
     return config
 
 
