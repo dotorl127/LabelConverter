@@ -1,5 +1,5 @@
 # userDFlabel_cvt
-- convert user defined label to known dataset label(etc. KITTI, COCO, VOC, MOT)
+- convert user defined label to known annotations format(check supported format [below](README.md#L15)) 
 - read configuration YAML file and parse user defined format
 
 ## Updates
