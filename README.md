@@ -42,7 +42,7 @@ $ python main.py -i ./somewhere/to/coco -c ./config/config_coco.yaml -o ./test_r
 ## How to custom
 ### Parser
 - create parser module using [base_parser.py](./label_parser/base_parser.py) in [label_parser](./label_parser) directory.
-- should coordinates format to x1, y1, x2, y2 using class function or custom function.
+- should coordinates format to x1, y1, x2, y2 [using class function](./label_parser/base_parser.py#L35) or custom function.
 - create configuration YAML file correctly could parse user defined label in [config](./config) directory
   - incase text type like csv just write column number each attribute
   - incase json, xml or hierarchy exists write start to end node to reach attribute
